@@ -1,0 +1,126 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>MyBOT - Guía</title>
+
+    <link rel="stylesheet" href="../stylesheets/styles.css">
+    <link rel="stylesheet" href="../stylesheets/pygment_trac.css">
+    <meta name="viewport" content="width=device-width">
+    <link rel="icon" type="image/png" href="../images/myboticon.png">
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>MyBot Guía</h1>
+        
+        <p class="view"><a href="inicio-bienvenida.html">Inicio/Bienvenida</a></p>
+        <p class="view"><a href="uso-editor-de-codigo.html">Instalación y uso de un editor de código</a></p>
+        <p class="view"><a href="cuenta-app-bot.html">Creación de su cuenta App y de Bot</a></p>
+        <p class="view"><a href="instalacion-discordjs-nodejs.html">Instalación de Discord.js y Node.js</a></p>
+        <p class="view"><a href="en-marcha-primer-bot.html">En marcha su primer Bot</a></p>
+        <p class="view"><a href="usando-un-prefix.html">Usando un prefix</a></p>
+        <p class="view"><a href="usando-mesajes-embeds.html">Usando mensajes Embeds</a></p>
+        <p class="view"><a href="usando-argumentos.html">Usando Argumentos</a></p>
+        <p class="view"><a href="ejemplos-comandos.html">Ejemplos</a></p>
+        <p class="view"><a href="usando-eventos.html">Usando Eventos</a></p>
+        <p class="view"><a href="usando-colecciones.html">Usando Colecciones ◄</a></p>
+        <p class="view"><a href="uso-de-roles.html">Usando Roles</a></p>
+        <p class="view"><a href="introducion-bot-de-musica-audio.html">Introducción a un Bot de musica/audio</a></p>
+        <br>
+        <ul>
+         
+          <li><a href="https://twitter.com/intent/follow?screen_name=cratermaik" target="_blank">Twitter<strong>Seguir</strong></a></li>
+          <li><a href="https://www.patreon.com/bePatron?c=926669" target="_blank">Patreon<strong>Donar</strong></a></li>
+          <li><a href="http://www.discordlatam.com/documentacion-mybot">Documentación<strong>Inicio</strong></a></li>
+
+        </ul>
+      </header>
+      <section>
+        <h1>Comprensión de las colecciones</h1>
+        <!--
+        <p><em>View the <a href="">source of this content</a>.</em></p>
+        -->
+        <p>En esta página veremos las colecciones y cómo usarlas para obtener datos de varias partes de la Discord API.</p>
+        <p>Una colección es una clase de utilidad que almacena datos, son la estructura de datos <em>Javascript Map( )</em> con métodos de utilidad adicionales. Esto se utiliza a lo largo de discord.js en lugar de un <em>Arrays</em> para cualquier cosa que tenga un ID, para mejorar considerablemente el rendimiento y la facilidad de uso.</p>
+        
+        <p>Clases que incluyen colecciones:</p>
+        <ul>
+            <li><em>client.users, client.guilds, client.channels</em></li>
+            <li><em>guild.channels, guild.members</em></li>
+            <li><em>client.emojis</em></li>
+            <li><em>message logs (en llamada del fetchMessages)</em></li>
+        </ul>
+        <br><br>
+        <h2>Colecciones por ID</h2>
+        <p>Para obtener cualquier cosa por ID podemos utilizar <em>Collection.get(id)</em>, Por ejemplo:</p>
+        <ul>
+            <li>Para obtener un canal: <em>client.channels.get("123456789854788512")</em>.</li>
+            <li>Para obtener un usuario: <em>client.users.get("123456789854788512")</em>.</li>
+        </ul>
+        <br><br>
+        <h2>Filtrar colecciones</h2>
+        <p>Las colecciones también tienen una forma personalizada de filtrar su contenido con una función anónima:</p>
+        <pre class="c-pre"><code class="c-code">
+<span class="c-morado">let</span> servidoresgrandes = client.guilds.<span class="c-azul">filter</span>(g => g.memberCount > 100);
+       </code></pre>
+       <br>
+       <table>
+          <tbody>
+        <tr>
+        <th>Nombre</th>
+        <th>Descripcion</th>
+          </tr>
+          <tr>  
+        <td>.filter( )</td>
+        <td>Devuelve una nueva colección que contiene sólo elementos del filtro, en este caso servidores con más de 100 miembros.</td>
+          </tr>
+        </tbody>
+        </table>
+        <br><br>
+        <h2>Mapeo de colecciones</h2>
+        <p>Una gran cosa que usted puede hacer con una colección es agarrar datos específicos de ella con <em>map( )</em>, que es útil al enumerar la materia.</p>
+        <p>Toma una función que devuelve una cadena. Su resultado es una matriz de todas las cadenas devueltas por cada elemento.</p>
+        <p>Ejemplo: vamos a obtener una lista completa de todos los servidores donde el bot está, por nombre:</p>
+        <pre class="c-pre"><code class="c-code">
+<span class="c-morado">const</span> servernombres = client.guilds.<span class="c-azul">map</span>(g => g.name).join("\n");
+        </code></pre>
+        <br>
+        <table>
+          <tbody>
+        <tr>
+        <th>Nombre</th>
+        <th>Descripcion</th>
+          </tr>
+          <tr>  
+        <td>.join( )</td>
+        <td>Es un método de matriz, que vincula todas las entradas entre sí, obtenemos una lista agradable de todos los servidores. ¡Ordenado!</td>
+          </tr>
+        </tbody>
+        </table>
+        <br>
+        <p>También podemos obtener una cadena más personalizada de un usuario:</p>
+        <pre class="c-pre"><code class="c-code">
+<span class="c-morado">const</span> tags  =  client.users.<span class="c-azul">map</span>(u => <span class="c-verde"> `${u.username}#${u.discriminator}`</span>).join(", ");
+        </code></pre>
+        <br><br><br>
+        <h2>Combinación y encadenamiento de colecciones</h2>
+        <p>En muchos casos, se puede encadenar métodos juntos para un código realmente limpio. Por ejemplo, esta es una lista delimitada por comas de todos los servidores pequeños en donde esta su bot:</p>
+        <pre class="c-pre"><code class="c-code">
+<span class="c-morado">const</span> serverpequeños = client.guilds.<span class="c-azul">filter</span>(g => g.memberCount < 10).<span class="c-azul">map</span>(g => g.name).join("\n");
+        </code></pre>
+        <br>
+        <p>Para ver todos los métodos de colección Discord.js, consulte la <a href="https://discord.js.org/#/docs/main/stable/class/Collection" target="_blank">documentacion discord.js</a> que describen los métodos nativos más notablemente.</p>
+        
+        <br><p><a href="uso-de-roles.html">Siguiente</a>.</p>
+        <br><br>
+        <p>Si tiene alguna pregunta y/o duda después de leer esta guía, ingrese al servidor guía en Discord: <a href="https://discord.gg/VxwER6t" target="_blank">MyBOT - Server guía</a>.</p>
+
+        <small>Sitio web <a href="https://github.com/CraterMaik" target="_blank">github/Crater</a></small></p>
+      </section>
+      
+    </div>
+    <script src="../javascripts/scale.fix.js"></script>
+  </body>
+</html>

@@ -1,0 +1,48 @@
+
+/****************
+ * Inline Tweet *
+ ****************/
+
+.inline-tweet {
+    color: inherit;
+}
+
+.inline-tweet::after {
+    color: inherit;
+    content: "";
+    font-family: FontAwesome;
+    font-style: normal;
+    font-weight: inherit;
+    margin-top: 0.1em;
+    opacity: 0;
+    padding-left: 6px;
+    position: absolute;
+    transition: all 0.15s ease-in-out;
+}
+
+.inline-tweet:hover {
+    color: #08c;
+}
+
+.inline-tweet:hover::after {
+    opacity: 1;
+}
+
+/********************
+ * Colorful Headers *
+ ********************/
+
+section:not(.hero) .economy h2,
+.economy .fa-4x {
+    color: #1d7e0d;
+}
+
+section:not(.hero) .energy h2,
+.energy .fa-4x {
+    color: #e48b20;
+}
+
+section:not(.hero) .health h2,
+.health .fa-4x {
+    color: #c6262e;
+}

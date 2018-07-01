@@ -1,0 +1,103 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>MyBOT - Guía</title>
+
+    <link rel="stylesheet" href="../stylesheets/styles.css">
+    <link rel="stylesheet" href="../stylesheets/pygment_trac.css">
+    <meta name="viewport" content="width=device-width">
+    <link rel="icon" type="image/png" href="../images/myboticon.png"
+    
+    
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>MyBot Guía</h1>
+        
+        <p class="view"><a href="inicio-bienvenida.html">Inicio/Bienvenida</a></p>
+        <p class="view"><a href="uso-editor-de-codigo.html">Instalacion y uso de un editor de codigo</a></p>
+        <p class="view"><a href="cuenta-app-bot.html">Creacion de su cuenta App y de Bot</a></p>
+        <p class="view"><a href="instalacion-discordjs-nodejs.html">Instalacion de Discord.js y Node.js ◄</a></p>
+        <p class="view"><a href="en-marcha-primer-bot.html">En marcha su primer Bot</a></p>
+        <p class="view"><a href="usando-un-prefix.html">Usando un prefix</a></p>
+        <p class="view"><a href="usando-mesajes-embeds.html">Usando mensajes Embeds</a></p>
+        <p class="view"><a href="usando-argumentos.html">Usando Argumentos</a></p>
+        <p class="view"><a href="ejemplos-comandos.html">Ejemplos</a></p>
+        <p class="view"><a href="usando-eventos.html">Usando Eventos</a></p>
+        <p class="view"><a href="usando-colecciones.html">Usando Colecciones</a></p>
+        <p class="view"><a href="uso-de-roles.html">Usando Roles</a></p>
+        <p class="view"><a href="introducion-bot-de-musica-audio.html">Introducción a un Bot de musica/audio</a></p>
+        <br>
+        <ul>
+         
+          <li><a href="https://twitter.com/intent/follow?screen_name=cratermaik" target="_blank">Twitter<strong>Seguir</strong></a></li>
+          <li><a href="https://www.patreon.com/bePatron?c=926669" target="_blank">Patreon<strong>Donar</strong></a></li>
+          <li><a href="http://www.discordlatam.com/documentacion-mybot">Documentación<strong>Inicio</strong></a></li>
+
+        </ul>
+      </header>
+      <section>
+        <h1>Instalación de Discord.js y Node.js</h1>
+       
+        <p>Para usar discord.js y empezar a programar necesitará un par de cosas instaladas. Por lo menos:</p>
+        <ul>
+            <li>Node.js v6 o superiores (versiones anteriores no son compatibles).</li>
+            <li>Obtener un editor de código real. No utilice el bloc de notas, no es suficiente. Si no tiene instalada un editor de código ir a <a href="uso-editor-de-codigo.html">Instalacion y uso de un editor de codigo</a>.</li>
+        </ul>
+        <br><br>
+        
+        <h2>Instalación de Node.js</h2>
+        <p>Node es un entorno de ejecución para JavaScript, usa un modelo de operaciones E/S sin bloqueo y orientado a eventos, que lo hace liviano y eficiente.</p>
+        <p>Bien para instalar Node, iremos la siguiente enlace <a href="https://nodejs.org/en/" target="_blank">Node.js descarga</a>.</p>
+        <p><img src="../images/node.PNG" alt=""></p>
+        <p>Descargar la versión recomendada e instalar en su PC.</p>
+        <p><blockquote>NOTA: Reinicié su PC si es necesario.</blockquote></p>
+        
+        <br><br>
+        <h2>Preparación del entorno para la programación</h2>
+        <p>Una vez que tenga el software requerido, el siguiente paso es preparar un espacio para su código.</p>
+        <ul>
+            <li>Crear una carpeta en el escritorio o en una unidad de disco duro o partición.</li>
+            <li>Darle un nombre a la carpeta (Ejm. BotDiscord, MiBot, etc.)</li>
+            <li>Una vez que haya creado una carpeta, abrir la consola (interfaz de línea de comandos) en esa carpeta.</li>
+        </ul>
+        <p><img src="../images/consola.PNG" alt=""></p>
+        <p>Si no pudo abrir la consola, sigue estos pasos:</p>
+        <ul>
+            <li>Presionar la tecla de windows(⊞ Win) + R y escribir cmd para abrir la consola.</li>
+            <li>Una vez dentro de la consola escribir lo siguiente: "cd desktop\MyBOT"(MyBOT es el nombre de la carpeta).</li>
+        </ul>
+        <p>Listo, ahora vayamos al siguiente paso!</p>
+        <br><br>
+        <h2>Instalacion de Discord.js</h2>
+        <p>Una vez dentro de la consola con la ruta de la carpeta, vamos a instalar Discord.js.</p>
+        <p>Pero primero vamos a inicializar esta carpeta con NPM, esto asegurará que cualquier otro módulo instalado se instale dentro de la carpeta.</p>
+        <p>Para instalar escribir "npm init -y" y luego pulse enter dentro de la consola.</p>
+        <p><img src="../images/initgif.gif" alt=""></p>
+        
+        <p>Se creara un nuevo archivo llamado "package.json", si desea saber mas información sobre package.json <a href="https://docs.npmjs.com/files/package.json" target="_blank">haga clic aquí</a>.</p>
+        <br>
+        <p>Y ahora instalamos Discord.js a través de NPM, el Node Package Manager:</p>
+        <p>Escribir "npm install discord.js --save" en la consola.</p>
+        <p><img src="../images/discordjsgif.gif" alt=""></p>
+        <p><blockquote>NOTA: "--save" es para asegurar que se guarde en el package.json que creamos anteriormente.</blockquote></p>
+        <br>
+        <p>La instalación es muy rapida y mostrara una gran cantidad de cosas en la pantalla de la consola. A menos que tengas un gran mensaje rojo que diga "not found", o el package.json no encontrado.</p>
+        <p>Una vez completada la instalación de Discord.js, nos fijamos en la carpeta y se dará cuenta de que hay una nueva carpeta creada llamada "node_modules". Esto contiene todos los paquetes instalados para su proyecto.</p>
+        <p>Significa que Discord.js se a instalado correctamente. ¡Bien echo!, ahora vayamos a poner en marcha su primer bot. <a href="en-marcha-primer-bot.html">Siguiente</a></p>
+        
+ 
+
+        <br><br>
+        <p>Si tiene alguna pregunta y/o duda después de leer esta guía, ingrese al servidor guía en Discord: <a href="https://discord.gg/VxwER6t" target="_blank">MyBOT - Server guía</a>.</p>
+        
+        <small>Sitio web <a href="https://github.com/CraterMaik" target="_blank">github/Crater</a></small></p>
+      </section>
+      
+    </div>
+    <script src="../javascripts/scale.fix.js"></script>
+  </body>
+</html>

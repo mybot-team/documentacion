@@ -1,0 +1,151 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>MyBOT - Guía</title>
+
+    <link rel="stylesheet" href="../stylesheets/styles.css">
+    <link rel="stylesheet" href="../stylesheets/pygment_trac.css">
+    <meta name="viewport" content="width=device-width">
+    <link rel="icon" type="image/png" href="../images/myboticon.png">
+    
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>MyBot Guía</h1>
+        
+        <p class="view"><a href="inicio-bienvenida.html">Inicio/Bienvenida</a></p>
+        <p class="view"><a href="uso-editor-de-codigo.html">Instalación y uso de un editor de código</a></p>
+        <p class="view"><a href="cuenta-app-bot.html">Creación de su cuenta App y de Bot</a></p>
+        <p class="view"><a href="instalacion-discordjs-nodejs.html">Instalación de Discord.js y Node.js</a></p>
+        <p class="view"><a href="en-marcha-primer-bot.html">En marcha su primer Bot</a></p>
+        <p class="view"><a href="usando-un-prefix.html">Usando un prefix</a></p>
+        <p class="view"><a href="usando-mesajes-embeds.html">Usando mensajes Embeds</a></p>
+        <p class="view"><a href="usando-argumentos.html">Usando Argumentos ◄</a></p>
+        <p class="view"><a href="ejemplos-comandos.html">Ejemplos</a></p>
+        <p class="view"><a href="usando-eventos.html">Usando Eventos</a></p>
+        <p class="view"><a href="usando-colecciones.html">Usando Colecciones</a></p>
+        <p class="view"><a href="uso-de-roles.html">Usando Roles</a></p>
+        <p class="view"><a href="introducion-bot-de-musica-audio.html">Introducción a un Bot de musica/audio</a></p>
+        <br>
+        <ul>
+          
+          <li><a href="https://twitter.com/intent/follow?screen_name=cratermaik" target="_blank">Twitter<strong>Seguir</strong></a></li>
+          <li><a href="https://www.patreon.com/bePatron?c=926669" target="_blank">Patreon<strong>Donar</strong></a></li>
+          <li><a href="http://www.discordlatam.com/documentacion-mybot">Documentación<strong>Inicio</strong></a></li>
+
+        </ul>
+      </header>
+      <section>
+        <h1>Comandos con argumentos</h1>
+        
+        <p>En el capítulo <a href="en-marcha-primer-bot.html">en marcha su primer Bot</a>, aprendimos como hacer más de un comando. Y todos los comandos comienzan con un prefix, pero no tenían argumentos.</p>
+        <p>Los argumentos son parámetros adicionales usados para variar lo que realmente hace el comando. Lo primero que tenemos que hacer para usar argumentos, es separar el comando con el resto.</p>
+        <br>
+        <p>Para separar los argumentos agregamos las 2 siguientes líneas de código:</p>
+        <pre class="c-pre"><code class="c-code">
+<span class="c-morado">const</span> args = message.content.<span class="c-azul">slice</span>(prefix.length).<span class="c-azul">trim</span>().<span class="c-azul">split</span>(/ +/g);
+<span class="c-morado">const</span> command = args.shift().<span class="c-azul">toLowerCase</span>();
+        </code></pre>
+        <br>
+        <table>
+          <tbody>
+        <tr>
+        <th>Nombre</th>
+        <th>Descripción</th>
+          </tr>
+          <tr>  
+        <td>.slice()</td>
+        <td>Esto ignora el primer contenido del texto que seria el prefix mas el comando (-decir), dejandonos solo el texto siguiente (arg1, arg2, arg3, etc.)</td>
+          </tr>
+          <tr>  
+        <td>.trim()</td>
+        <td>Asegura que no haya espacios adicionales antes o después del texto</td>
+          </tr>
+          <tr>  
+        <td>.shift()</td>
+        <td>Elimina el primer elemento de la matriz(micomando) y devuelve los argumentos restantes[arg1 ,arg2, arg3]</td>
+          </tr>
+        </tbody>
+        </table>
+        <br>
+        <p>De forma grafica:</p>
+        <p><img src="../images/imgargs.PNG" alt=""></p>
+        <blockquote>
+        <p>NOTA: En la programación siempre se inicia contando desde el numero 0.</p>
+        </blockquote>
+        <br><br>
+        <h2>Trabajando con los argumentos</h2>
+        <p>Empezemos a utilizar los argumentos en algunos comandos utiles, Ahora que tenemos la variable "command" ya no necesitamos usar startsWith() para cada comando:</p>
+        <pre><code>if(message.content.startsWith(prefix+'ping'))</code></pre><br>
+        <p>Podemos simplificarlo de esta manera, reemplazamos</p>
+        
+        <pre><code>if(command === 'ping')</code></pre>
+        <p>Agregamos 2 nuevos comandos, "decir" hace que el bot diga lo que acaba de enviar:</p>
+        <pre class="c-pre"><code class="c-code"><span class="c-morado">let</span> texto = args.<span class="c-azul">join</span>(<span class="c-verde">" "</span>);
+<span class="c-morado">if</span>(command <span class="c-azul">=== </span><span class="c-verde">'decir'</span>){
+    <span class="c-morado">if</span>(<span class="c-azul">!</span>texto) <span class="c-morado">return</span> message.channel.<span class="c-azul">send</span>(<span class="c-verde">`Escriba un contenido pára decir.`</span>);
+    message.channel.<span class="c-azul">send</span>(texto);
+    
+}</code></pre>
+       <br><p>Y "8ball" comando que respondera a tus preguntas:</p>
+       <pre class="c-pre"><code class="c-code"><span class="c-morado">if</span>(command<span class="c-azul"> === </span><span class="c-verde">'8ball'</span>){
+    <span class="c-morado">var</span> rpts = <span class="c-verde">["Sí", "No", "¿Por qué?", "Por favor", "Tal vez", "No sé", "Definitivamente?", " ¡Claro! "," Sí "," No "," Por supuesto! "," Por supuesto que no "]</span>;
+    <span class="c-morado">if</span> (<span class="c-azul">!</span>texto) <span class="c-morado">return</span> message.<span class="c-azul">reply</span>(<span class="c-verde">`Escriba una pregunta.`</span>);
+    message.channel.<span class="c-azul">send</span>(message.member.user+<span class="c-verde">' a su pregunta `'</span>+texto+<span class="c-verde">'` mi respuesta es: `'</span>+ rpts[<span class="c-amarillo">Math</span>.<span class="c-azul">floor</span>(<span class="c-amarillo">Math</span>.<span class="c-azul">random</span>() * rpts.length)]+'`');
+
+}</code></pre>
+       <br><br>
+       <h3>Otra alternativa "switch/case"</h3>
+       <p>También puede usar la variable "command" dentro en un bloque de comandos switch/case de la siguiente manera:</p>
+       <pre class="c-pre"><code class="c-code"><span class="c-morado">switch </span>(command){
+    <span class="c-morado">case </span><span class="c-verde">"ping"</span>: 
+        message.channel.<span class="c-azul">send</span>(<span class="c-verde">'Pong!'</span>);
+        <span class="c-morado">break</span>;
+    <span class="c-morado">case </span><span class="c-verde">"decir"</span>: 
+        <span class="c-morado">if</span>(<span class="c-azul">!</span>texto) <span class="c-morado">return</span> message.channel.<span class="c-azul">send</span>(<span class="c-verde">`Escriba un contenido pára decir.`</span>);
+        message.channel.<span class="c-azul">send</span>(texto);
+        <span class="c-morado">break</span>;
+}</code></pre>
+       <br><br>
+       <h2>Usando las menciones</h2>
+        
+        <p>Otra forma de utilizar argumentos, es cuando el comando debe dirigirse a un usuario específico. Por ejemplo, para obtener el avatar de un usuario, banear, kickear, etc.</p> 
+        
+        <p>Todas las menciones en un mensaje forman parte de la matriz <em>message.mentions</em>.</p> 
+        
+        <p>Vamos a crear un nuevo comando "kick" para controlar la matriz y los argumentos, debido a que Discord ahora soporta motivos de kick en los registros de auditoría-log por lo tanto el comando kick admite una razón opcional que sera el argumento.</p>
+        <br>
+        <pre class="c-pre"><code class="c-code"><span class="c-morado">if</span>(command<span class="c-azul"> === </span><span class="c-verde">'kick'</span> ){
+
+    <span class="c-morado">let</span> user = message.mentions.users.<span class="c-azul">first</span>();
+    <span class="c-morado">let</span> razon = args.<span class="c-azul">slice</span>(1).<span class="c-azul">join</span>(' ');
+    
+    <span class="c-morado">if</span> (message.mentions.users.size < <span class="c-amarillo">1</span>) <span class="c-morado">return</span> message.<span class="c-azul">reply</span>(<span class="c-verde">'Debe mencionar a alguien.'</span>).<span class="c-azul">catch</span>(<span class="c-amarillo">console</span>.<span class="c-azul">error</span>);
+    <span class="c-morado">if</span> (!razon) <span class="c-morado">return</span> message.channel.<span class="c-azul">send</span>(<span class="c-verde">'Escriba una razón, `-kick @username [razón]`'</span>);
+    <span class="c-morado">if</span> (!message.guild.<span class="c-azul">member</span>(user).kickable) <span class="c-morado">return</span> message.<span class="c-azul">reply</span>(<span class="c-verde">'No puedo patear al usuario mencionado.'</span>);
+     
+    message.guild.<span class="c-azul">member</span>(user).<span class="c-azul">kick</span>(razon);
+    message.channel.<span class="c-azul">send</span>(`**${user.username}**, <span class="c-verde">fue pateado del servidor, razón:</span> ${razon}.`);
+
+}</code></pre><br>
+        <p>Para utilizar este comando debe mencionar a un usuario, como este ejemplo: </p>
+        <pre><code> -kick @username [razón] </code></pre>
+        <br>
+        <p>Ahora en este punto, trabajar con los argumentos se convierte en algo que podría darse cuenta de que es necesario para mejorar sus comandos y su código. Por lo tanto, vayamos al <a href="ejemplos-comandos.html">Siguiente</a> capítulo.</p>
+        
+        
+        <br><br>
+        
+        <p>Si tiene alguna pregunta y/o duda después de leer esta guía, ingrese al servidor guía en Discord: <a href="https://discord.gg/VxwER6t" target="_blank">MyBOT - Server guía</a>.</p>
+        
+        
+        <small>Sitio web <a href="https://github.com/CraterMaik" target="_blank">github/Crater</a></small></p>
+      </section>
+      
+    </div>
+    <script src="../javascripts/scale.fix.js"></script>
+  </body>
+</html>

@@ -1,0 +1,129 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>MyBOT - Guía</title>
+
+    <link rel="stylesheet" href="../stylesheets/styles.css">
+    <link rel="stylesheet" href="../stylesheets/pygment_trac.css">
+    <meta name="viewport" content="width=device-width">
+    <link rel="icon" type="image/png" href="../images/myboticon.png">
+    
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>MyBot Guía</h1>
+        
+        <p class="view"><a href="inicio-bienvenida.html">Inicio/Bienvenida</a></p>
+        <p class="view"><a href="uso-editor-de-codigo.html">Instalación y uso de un editor de código</a></p>
+        <p class="view"><a href="cuenta-app-bot.html">Creación de su cuenta App y de Bot</a></p>
+        <p class="view"><a href="instalacion-discordjs-nodejs.html">Instalación de Discord.js y Node.js</a></p>
+        <p class="view"><a href="en-marcha-primer-bot.html">En marcha su primer Bot ◄</a></p>
+        <p class="view"><a href="usando-un-prefix.html">Usando un prefix</a></p>
+        <p class="view"><a href="usando-mesajes-embeds.html">Usando mensajes Embeds</a></p>
+        <p class="view"><a href="usando-argumentos.html">Usando Argumentos</a></p>
+        <p class="view"><a href="ejemplos-comandos.html">Ejemplos</a></p>
+        <p class="view"><a href="usando-eventos.html">Usando Eventos</a></p>
+        <p class="view"><a href="usando-colecciones.html">Usando Colecciones</a></p>
+        <p class="view"><a href="uso-de-roles.html">Usando Roles</a></p>
+        <p class="view"><a href="introducion-bot-de-musica-audio.html">Introducción a un Bot de musica/audio</a></p>
+        <br>
+        <ul>
+         
+          <li><a href="https://twitter.com/intent/follow?screen_name=cratermaik" target="_blank">Twitter<strong>Seguir</strong></a></li>
+          <li><a href="https://www.patreon.com/bePatron?c=926669" target="_blank">Patreon<strong>Donar</strong></a></li>
+          <li><a href="http://www.discordlatam.com/documentacion-mybot">Documentación<strong>Inicio</strong></a></li>
+
+        </ul>
+        
+      </header>
+      <section>
+        <h1>En marcha su primer bot</h1>
+        <!--
+        <p><em>View the <a href="">source of this content</a>.</em></p>
+        -->
+        
+        <p>En este capítulo empezaremos a codificar y desarrollar su bot, con un ejemplo basico y útil: </p>
+        <blockquote>
+        <p>NOTA: Se supone que usted ha seguido el capitulo de introducción, creación e instalación de su bot, antes de seguir con este capítulo. Tambien usted esta apunto de ver codigo .JS(Javascript), si no entiende o no tiene conocimiento de JavaScript ir a <a href="https://www.codecademy.com/learn/javascript" target="_blank">CodeAcademy</a> y aprender lo basico de Javascript. </p>
+        </blockquote>
+        <br>
+        <p>Comencemos:</p>
+        <ul>
+            <li>Abrir la carpeta del bot con Visual Studio Code o con el editor que tiene instalado.</li>
+            <li>Crear un nuevo archivo y darle un nombre con la extencion .js (archivo JavaScript).</li>
+            <li>Ejemplos: mybot.js, bot.js, app.js, etc. (Para el ejemplo utilizaré mybot.js).</li>
+        </ul><br>
+        <p><img src="../images/mybotgif.gif" alt=""></p>
+        <br>
+        <p>Una vez creado el archivo, copiar y pegar el código de ejemplo para iniciar un bot:</p>
+       
+        <pre class="c-pre"><code class="c-code"><span class="c-morado">const</span> Discord = <span class="c-azul">require</span>(<span class="c-verde">"discord.js"</span>);
+<span class="c-morado">const</span>  client = <span class="c-morado">new</span> <span class="c-amarillo">Discord.Client();</span>
+
+client.<span class="c-azul">on</span>(<span class="c-verde">"ready"</span>, () <span class="c-morado">=></span> {
+   <span class="c-amarillo">console.<span class="c-azul">log</span></span>(<span class="c-verde">"Estoy listo!"</span>);
+});
+client.<span class="c-azul">on</span>(<span class="c-verde">"message"</span>, (message) <span class="c-morado">=></span> {
+  <span class="c-morado">if</span> (message.content.<span class="c-azul">startsWith</span>(<span class="c-verde">"ping"</span>)) {
+    message.channel.<span class="c-azul">send</span>(<span class="c-verde">"pong!"</span>);
+  }
+});
+client.<span class="c-azul">login</span>(<span class="c-verde">"TokenSecreto"</span>);       
+        </code></pre><br>
+        <p>Ok, ahora reemplace la linea de la función <em>"client.login('TokenSecreto')"</em> por el token de su bot creado anteriormente.</p>
+        <p><img src="../images/tokegif.gif" alt=""></p>
+        <p>Y guardar todo utilizando <em>(CONTROL + S)</em>.</p>
+        <br><br>
+        <h2>Variables Utilizadas</h2>
+        <table>
+          <tbody>
+        <tr>
+        <th>Nombre</th>
+        <th>Descripcion</th>
+          </tr>
+          <tr>  
+        <td>Discord</td>
+        <td>Definido para referenciar el paquete/modulo discord.js.</td>
+          </tr>
+          <tr>  
+        <td>client</td>
+        <td>Representa la clase .Client(); es el eje principal para interactuar con Discord API, y el punto de partida para cualquier bot.</td>
+          </tr>
+        </tbody>
+        </table>
+        <blockquote>
+        <p>NOTA: La variable "client" el algunos otros ejemplos o tutoriales los llaman "bot", pero tecnicamente se puede llamar de muchas formas. mayormente se le llama "client" para referenciar la funcion de .Client();</p>
+        </blockquote>
+        <br>
+        <p>¡Listo!, una vez copiado el codigo y reemplazado el token es hora de activar el bot.</p>
+        <br>
+        <p>La manera de activar un bot es por consola CMD de windows o si estas utilizando Visual Studio Code puede utilizar el terminal(consola de comandos) integrando que vienen en el programa.</p>
+        <p>Activación por consola de comandos de windows:</p>
+        <ul>
+            <li>Abrir la consola e ingresar a la ruta de la carpeta del bot.</li>
+            <li>Escriba el siguiente comando dentro de la consola: <em>node mybot.js</em> (mybot.js es el nombre del archivo .js).</li>
+        </ul>
+        <p><img src="../images/mybotactivadogif.gif" alt=""></p>
+        <br>
+        <p>Si todo ha ido bien sin ningún error su bot esta conectado en su servidor, en la lista de usuarios.</p>
+        <br>
+        <p>¡Genial! su bot esta listo para responder a todas sus órdenes, en el ejemplo copiado el bot respondera con un <em>pong!</em> a cualquier mensaje que empiece exactamente con ping, vamos a comprobar.</p>
+        <p><img src="../images/pingcomando.gif" alt=""></p>
+        <br>
+        <p>¡Éxito! tienes tu bot ejecutándose!, ahora podras crear un montón de funciones para tu bot. La activación de su primer bot se ha completado.</p><br>
+        <h3>¿Que sigue?</h3>
+        <p>Usted tiene un bot básico, funcional, es hora de comenzar a agregar nuevas características!. <a href="usando-un-prefix.html">Siguiente paso</a></p>
+        <br><br>
+        <p>Si tiene alguna pregunta y/o duda después de leer esta guía, ingrese al servidor guía en Discord: <a href="https://discord.gg/VxwER6t" target="_blank">MyBOT - Server guía</a>.</p>
+        
+        
+        <small>Sitio web <a href="https://github.com/CraterMaik" target="_blank">github/Crater</a></small></p>
+      </section>
+      
+    </div>
+    <script src="../javascripts/scale.fix.js"></script>
+  </body>
+</html>

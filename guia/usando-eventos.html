@@ -1,0 +1,109 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>MyBOT - Guía</title>
+
+    <link rel="stylesheet" href="../stylesheets/styles.css">
+    <link rel="stylesheet" href="../stylesheets/pygment_trac.css">
+    <meta name="viewport" content="width=device-width">
+    <link rel="icon" type="image/png" href="../images/myboticon.png">
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>MyBot Guía</h1>
+        
+        <p class="view"><a href="inicio-bienvenida.html">Inicio/Bienvenida</a></p>
+        <p class="view"><a href="uso-editor-de-codigo.html">Instalación y uso de un editor de código</a></p>
+        <p class="view"><a href="cuenta-app-bot.html">Creación de su cuenta App y de Bot</a></p>
+        <p class="view"><a href="instalacion-discordjs-nodejs.html">Instalación de Discord.js y Node.js</a></p>
+        <p class="view"><a href="en-marcha-primer-bot.html">En marcha su primer Bot</a></p>
+        <p class="view"><a href="usando-un-prefix.html">Usando un prefix</a></p>
+        <p class="view"><a href="usando-mesajes-embeds.html">Usando mensajes Embeds</a></p>
+        <p class="view"><a href="usando-argumentos.html">Usando Argumentos</a></p>
+        <p class="view"><a href="ejemplos-comandos.html">Ejemplos</a></p>
+        <p class="view"><a href="usando-eventos.html">Usando Eventos ◄</a></p>
+        <p class="view"><a href="usando-colecciones.html">Usando Colecciones</a></p>
+        <p class="view"><a href="uso-de-roles.html">Usando Roles</a></p>
+        <p class="view"><a href="introducion-bot-de-musica-audio.html">Introducción a un Bot de musica/audio</a></p>
+        <br>
+        <ul>
+          
+          <li><a href="https://twitter.com/intent/follow?screen_name=cratermaik" target="_blank">Twitter<strong>Seguir</strong></a></li>
+          <li><a href="https://www.patreon.com/bePatron?c=926669" target="_blank">Patreon<strong>Donar</strong></a></li>
+          <li><a href="http://www.discordlatam.com/documentacion-mybot">Documentación<strong>Inicio</strong></a></li>
+
+        </ul>
+      </header>
+      <section>
+        <h1>Comprensión de eventos</h1>
+        <p>Ya hemos explorado algunos eventos en el capítulo  de <a href="en-marcha-primer-bot.html">en marcha tu primer bot</a>, el <em>message</em> manejador de mensajes y argumentos, tambien <em>ready</em> de iniciación. </p>
+        <p>Echemos un vistazo a algunos de los eventos manejadores más importantes que va a utilizar, junto con unos ejemplo.</p>
+        <br>
+        <blockquote>
+        <p>NOTA: Los eventos deben estar en el nivel "raíz" de su código, y no dentro de otro evento ("no poner uno dentro de otro").</p>
+        </blockquote>
+        <br><br>
+        <h2>El evento <em>ready</em> y su importancia</h2>
+        <p>La realidad de discord.js y muchas otras bibliotecas que encontrarás, es que el código no se ejecuta una línea a la vez.</p>
+        
+        <p><em>Ready</em> es el evento inicializador de discord.js, cuanto mas servidores este tu bot, toma mas tiempo en cargar e iniciar.</p>
+        
+        <p>Cualquier código que desee ejecutar en el arranque que requiera acceso al objeto client, tendrá que estar en este evento.</p>
+        <br>
+        <p>Este es un ejemplo de cómo usar el evento <em>ready</em> :</p>
+          <pre class="c-pre"><code class="c-code">client.<span class="c-azul">on</span>(<span class="c-verde">"ready"</span>, () => {
+   <span class="c-amarillo">console</span>.<span class="c-azul">log</span>(<span class="c-verde">`Estoy listo!, conectado en</span> ${client.guilds.size}<span class="c-verde"> servidores y  </span>${client.users.size}<span class="c-verde"> usuarios.`</span>);
+   client.user.<span class="c-azul">setPresence</span>( {
+       status: <span class="c-verde">"online"</span>,
+       game: {
+           name: <span class="c-verde">`-help | Estoy en</span> ${client.guilds.size}<span class="c-verde"> servidores.`</span>,
+           type: <span class="c-verde">"PLAYING"</span>
+       }
+    });
+});</code></pre>
+        <br><br>
+        <h2>Detectando nuevos miembros</h2>
+        <p>Otro evento útil es el <em>guildMemberAdd</em> que se activa cada vez que alguien se une al servidor en donde se encuentra el bot. Verás esto en servidores más pequeños: un bot da la bienvenida a cada nuevo miembro en un canal.</p>
+        <br>
+        <p>Para este ejemplo nesecitamos el ID del canal donde se mostrara el mensaje de bienvenida, puedes visitar <a href="https://discord.gg/VxwER6t" target="_blank">MyBOT - Server guía</a> para consultar  el ID de tu canal.</p>
+        
+        <pre class="c-pre"><code class="c-code">client.<span class="c-azul">on</span>(<span class="c-verde">"guildMemberAdd"</span>, (member) => {
+   <span class="c-amarillo">console</span>.<span class="c-azul">log</span>(<span class="c-verde">`Nuevo usuario: </span> ${member.user.username}<span class="c-verde"> se ha unido a </span>${member.guild.name}.`);
+   <span class="c-morado">var</span> canal = client.channels.<span class="c-azul">get</span>(<span class="c-verde">'123456789112455845'</span>); 
+   canal.<span class="c-azul">send</span>(`${member.user},<span class="c-verde"> bienvenido al servidor pasala bien.`</span>);
+   
+});</code></pre>
+        <br>
+        <blockquote>
+        <p>NOTA: La función client.channels.get('-IDDELCANAL-'); obtiene los datos del canal a través de la clase Client().</p>
+        </blockquote>
+        <br><br>
+        <h2>Errores, alertar y depurar mensajes</h2>
+        <p>Sí, los bots fallan a veces. Y sí, la libreria discord.js también puede! para prevenir errores completos usamos el evento <em>error</em>.</p>
+        <p>El siguiente código es un pequeño bit (que puede estar en cualquier parte del archivo del bot) capturará todo el mensaje de salida de discord.js, Esto incluye todos los errores, avisos y mensajes de depuración.</p>
+        <pre class="c-pre"><code class="c-code">client.<span class="c-azul">on</span>(<span class="c-verde">"error"</span>, (e) <span class="c-morado">=></span> <span class="c-amarillo">console</span>.<span  class="c-azul">error</span>(e));
+client.<span class="c-azul">on</span>(<span class="c-verde">"warn"</span>, (e) <span class="c-morado">=></span> <span class="c-amarillo">console</span>.<span  class="c-azul">warn</span>(e));
+client.<span class="c-azul">on</span>(<span class="c-verde">"debug"</span>, (e) <span class="c-morado">=></span> <span class="c-amarillo">console</span>.<span  class="c-azul">info</span>(e));</code></pre>
+        <br>
+        <blockquote>
+        <p>NOTA: Estos eventos son opcionales usted decide si agregarlos.</p>
+        </blockquote><br><br>
+        <h3>¿Qué hay de los otros eventos?</h3>
+        <p>Veamos: el evento <em>guildBanAdd</em> toma dos parametros para registrar que el miembro fue baneado, <em>roleCreate</em> toma un parametro para obtener los argumentos del rol creado y asi tenemos mas de 10 eventos utiles que pueden ser de gran ayuda para su bot.</p>
+       
+        <br>
+        <p><a href="usando-colecciones.html">Siguiente</a>.</p>
+        <br><br>
+        <p>Si tiene alguna pregunta y/o duda después de leer esta guía, ingrese al servidor oficial de Discord: <a href="https://discord.gg/VxwER6t" target="_blank">MyBOT - Server guía</a>.</p>
+        
+        
+        <small>Sitio web <a href="https://github.com/CraterMaik" target="_blank">github/Crater</a></small></p>
+      </section>
+      
+    </div>
+    <script src="../javascripts/scale.fix.js"></script>
+  </body>
+</html>

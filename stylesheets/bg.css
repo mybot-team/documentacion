@@ -1,0 +1,48 @@
+*{
+    background-color: #fff;
+    margin: 5px;
+    padding: 0px;
+}
+
+
+div{
+    text-align: center;
+    font-family: monospace;
+    font-size: 40px;
+    color: #000;
+}
+.caja-madre {
+	margin: auto;
+    margin-top: 60px;
+    width: 1000px;
+    height: 300px;
+}
+.cajas{
+    padding: 15px;
+    float: left;
+
+}
+
+.cajas p{
+    font-family:monospace;
+    text-align: center;
+   
+    font-size: 30px;
+    font-weight:700; 
+    color: #000;
+}
+
+
+img{
+  width: 255px;
+  height: 300px;
+  box-shadow: 5px 5px 0px #424242;
+  display: block;
+  
+}
+
+.rank{
+  width: 282px;
+  height: 90px;
+}
+

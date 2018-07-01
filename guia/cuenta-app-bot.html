@@ -1,0 +1,114 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>MyBOT - Guía</title>
+
+    <link rel="stylesheet" href="../stylesheets/styles.css">
+    <link rel="stylesheet" href="../stylesheets/pygment_trac.css">
+    <meta name="viewport" content="width=device-width">
+    <link rel="icon" type="image/png" href="../images/myboticon.png">
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>MyBot Guía</h1>
+        
+        <p class="view"><a href="inicio-bienvenida.html">Inicio/Bienvenida</a></p>
+        <p class="view"><a href="uso-editor-de-codigo.html">Instalación y uso de un editor de código</a></p>
+        <p class="view"><a href="cuenta-app-bot.html">Creación de su cuenta App y de Bot  ◄</a></p>
+        <p class="view"><a href="instalacion-discordjs-nodejs.html">Instalación de Discord.js y Node.js</a></p>
+        <p class="view"><a href="en-marcha-primer-bot.html">En marcha su primer Bot</a></p>
+        <p class="view"><a href="usando-un-prefix.html">Usando un prefix</a></p>
+        <p class="view"><a href="usando-mesajes-embeds.html">Usando mensajes Embeds</a></p>
+        <p class="view"><a href="usando-argumentos.html">Usando Argumentos</a></p>
+        <p class="view"><a href="ejemplos-comandos.html">Ejemplos</a></p>
+        <p class="view"><a href="usando-eventos.html">Usando Eventos</a></p>
+        <p class="view"><a href="usando-colecciones.html">Usando Colecciones</a></p>
+        <p class="view"><a href="uso-de-roles.html">Usando Roles</a></p>
+        <p class="view"><a href="introducion-bot-de-musica-audio.html">Introducción a un Bot de musica/audio</a></p>
+        <br>
+        <ul>
+          <li><a href="https://twitter.com/intent/follow?screen_name=cratermaik" target="_blank">Twitter<strong>Seguir</strong></a></li>
+          <li><a href="https://www.patreon.com/bePatron?c=926669" target="_blank">Patreon<strong>Donar</strong></a></li>
+          <li><a href="http://www.discordlatam.com/documentacion-mybot">Documentación<strong>Inicio</strong></a></li>
+        </ul>
+        
+      </header>
+      <section>
+        <h1>Creacion de su cuenta App y de Bot</h1>
+        <br><br>
+        <h2>Creacion de su cuenta Discord App</h2>
+        
+        <p>El primer paso para crear un bot es crear su propia aplicación Discord. El bot utilizará Discord API, que requiere la creación de una cuenta Discord para propósitos de autenticación. No te preocupes, es súper simple.</p>
+        
+        <p>Para crear la aplicación, diríjase a la página de <a href="https://discordapp.com/developers/applications/me" target="_blank">discordapp.com aplicación</a> e inicie sesión, llegará a una página que se ve así:</p> <br><img src="../images/myappd.PNG" alt=""><br><br>
+        
+        <p>Haga clic en "New Application". Esto lo llevará a la siguiente página, donde debe ingresar un nombre para la aplicación y un avatar/icon (el nombre de la aplicacion sera para el bot inicial). La descripción para la aplicación es opcional. <br><br><img src="../images/appnombres.PNG" alt=""></p>
+        <blockquote>
+        <p>Ignore el "Add Redirect URI (s)", esta sección no es útil para usted en este momento.</p>
+        </blockquote>
+        <p>Una vez ingresado todo los datos, clic en el boton "Create App".</p>
+        
+        
+        <br><br>
+        <h2>Crear la cuenta del BOT</h2>
+
+        <p>Despues de crear la aplicación, le llevara a 2 nuevas secciones, la primera es la ID de la aplicación y la segunda te permitira crear el Bot. Eso es exactamente lo que vamos hacer, asi que haga clic en "Create a Bot User".</p>
+        <p><img src="../images/seccion.PNG" alt=""></p><br>
+        <p>Luego damos clic en "Yes, Do it.".<br><br><img src="../images/yes.PNG" alt=""></p><br>
+        <p>Usted a completado el proceso de crear la aplicación y el bot, darle clic en Public Bot:</p>
+        <p><img src="../images/seccion2.PNG" alt=""></p><br>
+        <p>Si esto es así, haga clic en "save changes" para guardar todo.</p>
+        <p><img src="../images/saveapp.PNG" alt=""></p>
+        
+        
+        <br><br>
+        <h2>Obtener el token de su bot</h2>
+        
+        <blockquote>
+        <p>ATENCIÓN: Esta parte es realmente importante, el token de su bot está destinado a ser SECRETO. Es la forma en que Discord autentica el bot, asi como cuando inicias sección con un nombre de usuario y una contraseña. Revelar su token es como poner su contraseña en publico, si su token llega a ser publica y usado por otros, cámbielo de inmediato.</p>
+        </blockquote>
+        <br>
+        <p>El Token es secreto, como acabo de mencionar, es la forma en que el bot se autentica.</p>
+        <p>Para el token, basta con hacer clic en "Click to reveal" en la sección del App Bot.</p>
+        <p><img src="../images/token_.PNG" alt=""></p><br>
+        <p>A continuación, obtendra su token secreto:</p>
+        <p><img src="../images/tokengerenado.PNG" alt=""></p>
+        
+
+        <blockquote>
+        <p>NOTA: El token mostrado en este ejemplo no es válido. También asegúrese de copiar y guardar el Token para utilizarlo mas adelante.</p>
+        </blockquote>
+        <br><br>
+        <h2>Agrege su bot a un servidor</h2>
+        <p>Bien, incluso si no ha escrito ni una sola línea de código para su bot, ya puede invitarlo a un servidor.</p>
+        <p>Para invitar a un bot, necesita los permisos de "ADMINISTRADOR" del servidor a donde agregara el bot o ser el creador. De esa forma podra agregar un bot.</p><br>
+        <p>Copiar el ID de su bot, de la pagina de la aplicacion.</p>
+        <p><img src="../images/IDbot.PNG" alt=""></p><br>
+        <p>Para generar el link de invitación de su bot utilizaremos una herramienta API de permisos, diríjase a esta pagina <a href="https://discordapi.com/permissions.html#1345611902" target="_blank">discordapi.com/permissions</a> para generar el link de invitacion.</p>
+        
+        <p>Pegar del ID del bot en "Insert Client Id here" de la siguiente forma.</p>
+        <p><img src="../images/linkgenerador.PNG" alt=""></p>
+        <br>
+        <p>Abrir el link de invitación generado, se muestra una ventana que le permite elegir el servidor donde podra agregar el bot, simplemente seleccione el servidor y haga clic en "Autorizar".</p>
+        <p><img src="../images/autorizar.PNG" alt=""></p>
+        <br>
+        <p>Una vez echo todos los pasos el bot se a unido al servidor invitado.</p>
+        <p><img src="../images/botinvitado.png" alt=""></p>
+        <blockquote>
+        <p>NOTA: Sólo puede agregar un bot a los servidores donde tenga permisos de ADMINISTRACION o ser el dueño del servidor.</p>
+        <p>El bot ingresara al servidor en estado de Desconectado, mas adelante veremos como activar el bot.</p>
+        </blockquote>
+        <br>
+        <p>¡Éxito! Ahora tiene su bot agregado a su servidor, es hora de comenzar con el entorno de la programación. <a href="instalacion-discordjs-nodejs.html">Siguiente</a></p>
+        <br><br>
+        <p>Si tiene alguna pregunta y/o duda después de leer esta guía, ingrese al servidor guía en Discord: <a href="https://discord.gg/VxwER6t" target="_blank">MyBOT - Server guía</a>.</p>
+        <small>Sitio web <a href="https://github.com/CraterMaik" target="_blank">github/Crater</a></small></p>
+      </section>
+      
+    </div>
+    <script src="../javascripts/scale.fix.js"></script>
+  </body>
+</html>

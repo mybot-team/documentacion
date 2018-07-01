@@ -1,0 +1,225 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Alojando un bot en Heroku.com - MyBot Guía</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    
+    <meta name="viewport" content="width=device-width">
+    
+    <link rel="icon" type="image/png" href="images/myboticon.png">
+    
+    <meta property="og:title" content="Documentación MyBOT - Alojando en Heroku">
+    
+        
+  </head>
+  <body>
+    <div class="wrapper">
+     <header>
+      <h1>MyBot Guía</h1>
+        
+        <ul>
+          <li><a href="https://twitter.com/intent/follow?screen_name=cratermaik" target="_blank">Twitter<strong>Seguir</strong></a></li>
+          <li><a href="https://www.patreon.com/bePatron?c=926669" target="_blank">Patreon<strong>Donar</strong></a></li>
+          <li><a href="http://www.discordlatam.com/documentacion-mybot">Documentación<strong>Inicio</strong></a></li>
+        </ul>
+      </header>
+      
+      <section>
+        
+        <h1>Alojando una app en Heroku.com</h1>
+        <p>Heroku es una plataforma en la nube que ofrece servicio para alojar e implementar aplicaciones web en varios lenguajes
+        de programacion, como Node.js, Ruby, Python, Java, PHP y Go.</p>
+        
+        <p>Las aplicaciones se corren desde un servidor Heroku usando Heroku DNS Server para apuntar al dominio de la aplicación (nombreaplicacion.herokuapp.com). Cada aplicación corre sobre un motor a través de una “red de bancos de prueba” que consta de varios servidores. El servidor Git de Heroku maneja los repositorios de las aplicaciones que son subidas por los usuarios.</p>
+        
+        <p>Heroku ofrece un plan de alojamiento gratuito, ¡así que no tienes que pagar nada en absoluto!. Ahora ya sabemos que podemos utilizar heroku para almacenar nuestras aplicaciones/bots.</p>
+        <br><br>
+        <h2>Empezando con Heroku</h2>
+        <p>Lo primero que debemos hacer es crear una cuenta en <a href="https://id.heroku.com/login" target="_blank">Heroku</a>, una vez la hayamos creado y confirmado podemos crear un sencillo proyecto utilizando nodejs.</p>
+        <p>Ingresamos a "create new app".</p>
+        <p><img src="./images/heroku-app-new.gif" alt=""></p>
+        <br><br>
+        <h2>Implementación</h2>
+        <p>Puedes configurar Heroku de dos formas que te permitiran implementar fácilmente cualquier cambio realizado en su bot:</p>
+        <ul>
+            <li>Heroku CLI : con el poder de Git, git push heroku master todo lo que necesitarás hacer con la interfaz de línea de comando fácil de usar de Heroku.</li>
+            
+            <li>GitHub : para la implementación automática de su bot siempre que se actualice su repositorio GitHub configurado.</li>
+        </ul>
+        <br><br>
+        <p>En esta guía vamos a usar Heroku CLI con el poder de Git, para eso debemos instalar lo siguiente:</p>
+        <ul>
+            <li><a href="https://devcenter.heroku.com/articles/heroku-cli#download-and-install" target="_blank">Heroku CLI</a> (instalar según la versión de su sistema operativo).</li>
+            <li><a href="https://git-scm.com/" target="_blank">Git</a> ya que heroku trabaja directamente con git remotamente.</li>
+        </ul>
+        
+        <br><br>
+        <h2>Conectando a heroku</h2>
+        <p>Para poder conectar a heroku remotamente debemos abrir nuestra consola (CMD) y escribir lo siguiente:</p>
+        <ul><li><p>Primero veremos si se instalo correctamente heroku en su PC:</p></li></ul>
+        <pre><code>heroku --version</code></pre>
+        <br>
+        <ul><li>Conectamos a heroku a travez de comandos:</li></ul>
+        <pre><code>heroku login</code></pre>
+        <p>Una vez lo hagamos, nos pedirá nuestras credenciales de heroku, introduce tu email y password, si todo ha ido bien nos regresara denuevo a la ruta, perfecto.</p>
+        <blockquote>
+        
+        <p>Enter your Heroku credentials.</p>
+        <p>Email: user@example.com</p>
+        <p>Password: ********</p>
+        <p>Logged is as user@example.com</p>
+        </blockquote>
+        <br>
+        
+        <p>Ahora debemos inicializar nuestro repositorio git y subir el proyecto(Carpeta) completo.</p>
+        <br><br>
+        <h2>Mi proyecto</h2>
+        <p>Creamos una carpeta para iniciar su bot, es recomendable crear un nuevo bot para evitar problemas con su bot principal, ya sea en la importación de los archivos(.js, .json, .sqlite, etc.) o instalación de npm(packages) a heroku.</p><br>
+        <p>En la misma consola donde iniciaste el login de heroku, ingresar a la ruta del bot:</p>
+        
+        <pre><code>cd desktop/mycarpetabot</code></pre> 
+        
+        <br>
+        <p>Agregar los siguientes archivos a su carpeta bot:</p>
+        <ul><li>index.js</li></ul>
+        <pre><code><span class="c-morado">const</span> Discord = require('discord.js');
+<span class="c-morado">const</span> client = new Discord.Client();
+
+client.<span class="c-morado">on</span>('ready', () => {
+    client.user.setActivity('bot en heroku', {type: 'WATCHING'});
+    console.log('Listo!');
+});
+
+
+let prefix = process.<span class="c-amarillo">env.PREFIX</span>;
+
+client.<span class="c-morado">on</span>('message', message => {
+    if (!message.content.startsWith(prefix) || !message.guild) return;
+    if (message.author.bot) return;
+    
+    const cont = message.content.split(' ').slice(1);
+    const args = cont.join(' ');
+
+    if (message.content.startsWith(prefix+'ping')){
+        message.channel.send('pong');
+
+    } else if (message.content.startsWith(prefix+ 'say')) {
+        if (!args) return;
+        message.channel.send(args);
+    }
+});
+
+client.login(process.<span class="c-amarillo">env.TOKEN</span>);
+</code></pre>
+        <br>
+        <ul><li>package.json</li></ul>
+        <pre><code class="c-verde">{
+  "name": "mybot-heroku",
+  "version": "1.0.0",
+  "description": "An in-depth guide on deploying your Discord.js bot on Heroku",
+  "main": "index.js",
+  "engines": {
+    "node": "8.x",
+    "npm": "*"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/synicalsyntax/discord.js-heroku.git"
+  },
+  "keywords": [
+    "heroku",
+    "discord.js"
+  ],
+  "author": "synicalsyntax",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/synicalsyntax/discord.js-heroku/issues"
+  },
+  "homepage": "https://github.com/synicalsyntax/discord.js-heroku#readme",
+  "dependencies": {
+    "discord.js": "^11.3.0"
+  }
+}
+</code></pre>
+      <br>
+      <ul><li>Procfile</li></ul>
+      <pre><code>worker: npm start</code></pre>
+      <p><img src="./images/worker.gif" alt=""></p>
+      <br><ul><li>.gitignore</li></ul>
+      <p><a href="https://github.com/synicalsyntax/discord.js-heroku/blob/master/.gitignore" target="_blank">gitignore link</a> (copiar el contenido dentro tu archivo .gitignore)</p>
+      <p><img src="./images/gitignore.gif" alt=""></p>
+      <p>el archivo .gitignore especifica los archivos que debemos ignorar y que ya no serán necesarios en heroku como: /node_modules, yarn, Thumbs.db, etc</p>
+      <br><br>
+      <h2>Subir el proyecto a heroku</h2>
+      <p>Ahora debemos inicializar nuestro repositorio y subir el proyecto completo utilizando Git previamente instalado, para ésto escribe los siguientes comandos en la consola donde iniciaste el login heroku:</p>
+      <p><img src="./images/gitpush.gif" alt=""></p>
+      <pre><code>git init</code></pre>
+      <ul><li>git init - inicia un repositorio git en un directorio nuevo o existente</li></ul>
+      <br>
+      
+      <pre><code>heroku git:remote -a nombre-app-heroku </bot-testar2></code></pre>
+      <ul><li>heroku git:remote - conecta remotamente tu app heroku creada en heroku.com, "bot-testar2" es el nombre de la app para esta guía, usted debe ingresar el nombre de su app heroku.</li></ul>
+      <br>
+      
+      <pre><code>git add .</code></pre>
+      <ul><li>git add . - Comienza a trackear/guardar los archivos al repositorio.</li></ul>
+      <br>
+      
+      <pre><code>git commit -m "tu mensaje"</code></pre>
+      <ul><li>git commit - confirma los cambios realizados. El “tu mensaje” generalmente se usa para asociar al commit una breve descripción de los cambios realizados al repositorio.</li></ul>
+      <br>
+      
+      <pre><code>git push heroku master</code></pre>
+      <ul><li>git push - Empuja los cambios desde el repositorio local master a heroku.com donde esta su app.</li></ul>
+      <br>
+      <p>Ahora ya tenemos nuestro proyecto subido a heroku y conectado a través de git, sólo nos queda ingresar el token y prefix remotamente.</p>
+      <br>
+      <p>Ingrese el siguiente comando para configurar el token y prefix de su bot.</p>
+      <pre><code>heroku config:set TOKEN=Tokenbotsecreto PREFIX=!!</code></pre>
+      <p><img src="./images/tokenprefix.gif" alt=""></p>
+      
+      <p>Si no a tenido ningun error durante el proceso de importar su proyecto a heroku, felicidades ya tiene su bot alojado en heroku. Ahora solo no falta configurar los Dynos de la app heroku para que su bot este activo las 24 horas.</p>
+      <br><br>
+      <h2>Usando Dynos</h2>
+      <p>A cada cuenta de Heroku se le asigna un grupo de horas que puede usar con los dynos gratis. Esto le ayuda a conservar sus horas de prueba gratuitas y así puede usarlas para tener su app activado por mucho tiempo.</p>
+      <p>Ingresamos al dashboard de la app en heroku.com, encontrara un panel de su app y vamos a "configure Dynos"</p><br>
+      <p><img src="./images/dynosconfig.png" alt=""></p>
+      <br>
+      <p>Desactivamos web dynos y activamos worker y confirmamos, de esta manera el bot se mantendra activo 24 horas al dia.</p>
+      <br>
+      <p><img src="./images/dynosnpm.gif" alt=""></p><br>
+      <p>Verificamos si el bot inicio correctamente ingresando a "More > View logs" de la app.</p>
+      <br>
+      <p><img src="./images/logsview.png" alt=""></p><br>
+      <p>Revisamos el log si se mostro el mensaje de "Estoy listo!.</p>
+      <p><img src="./images/logsworker.png" alt=""></p><br>
+      <p>Si todo esta correcto felicidades su bot ya esta activo y alojado en Heroku.</p>
+      <br><br>
+      <h2>Recursos</h2>
+      <p>Aquí hay algunos recursos adicionales:</p>
+      <ul>
+          <li><a href="https://github.com/synicalsyntax/discord.js-heroku" target="_blank">Guia discord.js-heroku - en ingles</a> (Información adicional)</li>
+          <li><a href="https://devcenter.heroku.com/articles/free-dyno-hours" target="_blank">Dynos en Heroku</a> (Dynos planes)</li>
+      </ul>
+      <br><br>
+      <h2>Obtener ayuda</h2>
+
+        <p>Si tiene alguna pregunta y/o duda después de leer esta guía, ingrese al servidor guía en discord:</p>
+        <p><a href="https://discord.gg/VxwER6t" target="_blank"><img src="images/invitacion.PNG" alt=""></a></p>
+      </section>
+      <footer>
+        
+        <p><small>Sitio web <a href="https://github.com/CraterMaik" target="_blank">github/Crater</a> &mdash; Diseño web <a href="https://github.com/orderedlist" target="_blank">Orderedlist</a></small></p>
+      </footer>
+    </div>
+    <script src="javascripts/scale.fix.js"></script>
+  </body>
+</html>

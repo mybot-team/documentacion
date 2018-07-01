@@ -1,0 +1,151 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>MyBOT - Guía</title>
+
+    <link rel="stylesheet" href="../stylesheets/styles.css">
+    <link rel="stylesheet" href="../stylesheets/pygment_trac.css">
+    <meta name="viewport" content="width=device-width">
+    <link rel="icon" type="image/png" href="../images/myboticon.png">
+  </head>
+  <body>
+    <div class="wrapper">
+     <header>
+        <h1>MyBot Guía</h1>
+        
+        <p class="view"><a href="inicio-bienvenida.html">Inicio/Bienvenida</a></p>
+        <p class="view"><a href="uso-editor-de-codigo.html">Instalación y uso de un editor de código</a></p>
+        <p class="view"><a href="cuenta-app-bot.html">Creación de su cuenta App y de Bot</a></p>
+        <p class="view"><a href="instalacion-discordjs-nodejs.html">Instalación de Discord.js y Node.js</a></p>
+        <p class="view"><a href="en-marcha-primer-bot.html">En marcha su primer Bot</a></p>
+        <p class="view"><a href="usando-un-prefix.html">Usando un prefix</a></p>
+        <p class="view"><a href="usando-mesajes-embeds.html">Usando mensajes Embeds ◄</a></p>
+        <p class="view"><a href="usando-argumentos.html">Usando Argumentos</a></p>
+        <p class="view"><a href="ejemplos-comandos.html">Ejemplos</a></p>
+        <p class="view"><a href="usando-eventos.html">Usando Eventos</a></p>
+        <p class="view"><a href="usando-colecciones.html">Usando Colecciones</a></p>
+        <p class="view"><a href="uso-de-roles.html">Usando Roles</a></p>
+        <p class="view"><a href="introducion-bot-de-musica-audio.html">Introducción a un Bot de musica/audio</a></p>
+        <br>
+        <ul>
+         
+          <li><a href="https://twitter.com/intent/follow?screen_name=cratermaik" target="_blank">Twitter<strong>Seguir</strong></a></li>
+          <li><a href="https://www.patreon.com/bePatron?c=926669" target="_blank">Patreon<strong>Donar</strong></a></li>
+          <li><a href="http://www.discordlatam.com/documentacion-mybot">Documentación<strong>Inicio</strong></a></li>
+
+        </ul>
+      </header>
+      <section>
+        <h1>Mensajes Embeds</h1>
+        
+        <p>Un embed es un tipo de mensaje con una interfaz fluida con muchas propiedades para la creación de un mensaje. Teniendo encuenta que no tendrán la misma apariencia en los moviles.</p>
+        
+        <p>Algunas reglas de embeds que tienes que saber:</p>
+        <ul>
+            <li>Cada campo es opcional.</li>
+            <li>Al menos un campo debe estar presente.</li>
+            <li>Ningún campo puede estar vacío, nulo o no definido.</li>
+        </ul>
+        <p>Son reglas necesarias para una buena inserción del mensaje embed.</p><br>
+        <p>Hay 2 maneras de hacer embeds. La primera, es escribir el embed usted mismo, como un objeto. Aquí hay un ejemplo de embed en una sola línea:</p>
+        <pre class="c-pre"><code class="c-code"><span class="c-morado">if</span> (message.content.<span class="c-azul">startsWith</span>(prefix +<span class="c-verde">"embed"</span>)){
+    message.channel.<span class="c-azul">send</span>({embed: {
+      color: <span class="c-amarillo">3447003</span>,
+      description: <span class="c-verde">"Esto es un simple mensaje embed."</span>
+    }});
+}</code>
+        </pre><br>
+        <p>Resultado:</p>
+        <p><img src="../images/msgembed.PNG" alt=""></p>
+        <blockquote>
+        <p>NOTA: El "color" determina la barra a la izquierda, y "description" el contenido principal del mensaje.</p>
+        </blockquote
+                <br><br><br>
+        <h2>1. Usando el metodo RichEmbed</h2>
+        <p>La segunda manera de hacer un embed, que podria ser mas simple es usando el constructor RichEmbed.</p>
+        <p>Se aplican las mismas reglas que las normales. De hecho, el constructor es sólo un acceso directo para obtener el mismo objeto.</p><br>
+        <p>Aquí un ejemplo, creando un nuevo comando "richembed":</p>
+        <pre class="c-pre"><code class="c-code"><span class="c-morado">if</span> (message.content.<span class="c-azul">startsWith</span>(prefix +<span class="c-verde">"richembed"</span> )){
+    <span class="c-morado">const</span> embed = <span class="c-morado">new</span> Discord.<span class="c-amarillo">RichEmbed()</span> 
+    .<span class="c-azul">setTitle</span>(<span class="c-verde">"Este es su título, puede contener 256 caracteres"</span>)
+    .<span class="c-azul">setAuthor</span>(message.author.username, message.author.avatarURL)
+    .<span class="c-azul">setColor</span>(0x00AE86)
+    .<span class="c-azul">setDescription</span>(<span class="c-verde">"Este es el cuerpo principal del texto, puede contener 2048 caracteres."</span>)
+    .<span class="c-azul">setFooter</span>(<span class="c-verde">"Pie de página, puede contener 2048 caracteres"</span>, client.user.avatarURL)
+    .<span class="c-azul">setImage</span>(message.author.avatarURL)
+    .<span class="c-azul">setThumbnail</span>(message.author.avatarURL)
+    .<span class="c-azul">setTimestamp</span>()
+    .<span class="c-azul">setURL</span>(<span class="c-verde">"https://github.com/CraterMaik"</span>)
+    .<span class="c-azul">addField</span>(<span class="c-verde">"Este es un título de campo, puede contener 256 caracteres",
+      "Este es un valor de campo, puede contener 2048 caracteres."</span>)
+    .<span class="c-azul">addField</span>(<span class="c-verde">"Campo en línea", "Debajo del campo en línea"</span>, true)
+    .<span class="c-azul">addBlankField</span>(true)
+    .<span class="c-azul">addField</span>(<span class="c-verde">"Campo en línea 3", "Puede tener un máximo de 25 campos.</span>", true);
+    
+    message.channel.<span class="c-azul">send</span>({embed});
+}</code></pre>
+                 
+        <blockquote>
+        <p>NOTA: .setTimestamp() Toma un objeto Date, por defecto a la fecha actual, .addBlankField() Campo en blanco, útil para crear un poco de espacio.</p>
+        </blockquote><br>
+        <br>
+        <p>Resultado:</p>
+        <p><img src="../images/msgrichembed.PNG" alt=""></p>
+        <blockquote>
+        <p>NOTA:  Las incorporaciones pueden parecer atractivas, pero no tendrán la misma apariencia en los móviles.</p>
+        </blockquote>
+        
+        <br><br>
+        <h2>2. Usando objetos por Campos</h2>
+        <p>Los campos son los que puede hacer que los embeds sean realmente agradables cada campo puede tener un título y un valor, y los campos también se pueden apilar por columnas. un ejemplo más complejo de un embed que tiene muchos campos diferentes, así como iconos y un pie de página:</p>
+        <br>
+        <pre class="c-pre"><code class="c-code"><span class="c-morado">if</span> (message.content.<span class="c-azul">startsWith</span>(prefix +<span class="c-verde">"embed"</span>)){
+    message.channel.<span class="c-azul">send</span>({embed: {
+      color: <span class="c-amarillo">3447003</span>,
+      author: {
+          name: client.user.username,
+          icon_url: client.user.avatarURL
+      },
+      title: <span class="c-verde">"Enlace Embed"</span>,
+      url: <span class="c-verde">"https://github.com/CraterMaik"</span>,
+      description: <span class="c-verde">"Mesaje de prueba para la descripcion del embed."</span>,
+      fields: [{
+          name: <span class="c-verde">"Campo1"</span>,
+          value: <span class="c-verde">"Pueden tener diferentes campos con pequeñas descripciones."</span>
+        },
+        {
+          name: <span class="c-verde">"Campo2"</span>,
+          value: <span class="c-verde">"Puedes poner [Enlaces web](https://github.com/CraterMaik) dentro del embed."</span>
+        },
+        {
+          name: <span class="c-verde">"Campo3"</span>,
+          value: <span class="c-verde">"Puedes poner todos los Markdown *cursiva* **__Marcado__** dentro de un embed."</span>
+        }
+      ],
+      timestamp: <span class="c-morado">new</span> Date(),
+      footer: {
+        icon_url: client.user.avatarURL,
+        text: <span class="c-verde">github.com/CraterMaik"</span>
+      }
+    }
+});
+}</code>
+        </pre><br>
+        <p>Resultado:</p>
+        <p><img src="../images/msgembed2.PNG" alt=""></p>
+
+        <br>
+        <p><a href="usando-argumentos.html">Siguiente.</a></p>
+        <br><br>
+        <p>Si tiene alguna pregunta y/o duda después de leer esta guía, ingrese al servidor guía en Discord: <a href="https://discord.gg/VxwER6t" target="_blank">MyBOT - Server guía</a>.</p>
+        
+        
+        <small>Sitio web <a href="https://github.com/CraterMaik" target="_blank">github/Crater</a></small></p>
+      </section>
+      
+    </div>
+    <script src="../javascripts/scale.fix.js"></script>
+  </body>
+</html>

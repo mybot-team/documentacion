@@ -1,0 +1,182 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>MyBOT - Guía</title>
+
+    <link rel="stylesheet" href="../stylesheets/styles.css">
+    <link rel="stylesheet" href="../stylesheets/pygment_trac.css">
+    <meta name="viewport" content="width=device-width">
+    <link rel="icon" type="image/png" href="../images/myboticon.png">
+    
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>MyBot Guía</h1>
+        
+        <p class="view"><a href="inicio-bienvenida.html">Inicio/Bienvenida</a></p>
+        <p class="view"><a href="uso-editor-de-codigo.html">Instalación y uso de un editor de código</a></p>
+        <p class="view"><a href="cuenta-app-bot.html">Creación de su cuenta App y de Bot</a></p>
+        <p class="view"><a href="instalacion-discordjs-nodejs.html">Instalación de Discord.js y Node.js</a></p>
+        <p class="view"><a href="en-marcha-primer-bot.html">En marcha su primer Bot</a></p>
+        <p class="view"><a href="usando-un-prefix.html">Usando un prefix</a></p>
+        <p class="view"><a href="usando-mesajes-embeds.html">Usando mensajes Embeds</a></p>
+        <p class="view"><a href="usando-argumentos.html">Usando Argumentos</a></p>
+        <p class="view"><a href="ejemplos-comandos.html">Ejemplos</a></p>
+        <p class="view"><a href="usando-eventos.html">Usando Eventos</a></p>
+        <p class="view"><a href="usando-colecciones.html">Usando Colecciones</a></p>
+        <p class="view"><a href="uso-de-roles.html">Usando Roles</a></p>
+        <p class="view"><a href="introducion-bot-de-musica-audio.html">Introducción a un Bot de musica/audio ◄</a></p>
+        <br>
+           <ul>
+              <li><a href="https://twitter.com/intent/follow?screen_name=cratermaik" target="_blank">Twitter<strong>Seguir</strong></a></li>
+              <li><a href="https://www.patreon.com/bePatron?c=926669" target="_blank">Patreon<strong>Donar</strong></a></li>
+              <li><a href="http://www.discordlatam.com/documentacion-mybot">Documentación<strong>Inicio</strong></a></li>
+           </ul>
+      </header>
+      <section>
+        <h1>Introducción a un bot de música o audio</h1>
+        <p>La voz en discord.js se puede utilizar para muchas cosas, tales como un bots de la música, grabación o retransmisión de audio.</p>
+        <p>En discord.js, puede utilizar la voz conectándose a un <em>Canal de voz</em> para obtener una <em>Conexión de Voz</em>, donde puede iniciar la transmisión y recepción de audio.</p>
+        
+        <br><br>
+        <h2>Instalación de un codificador y ffmpeg</h2>
+        <p>Para empezar, asegúrese de tener instalados estos componentes:</p>
+        <ul>
+            <li>ffmpeg - <em>npm install ffmpeg-binaries</em></li>
+            <li>un codificador de opus, elija uno de abajo:</li>
+            <ul>
+                <li><em>npm install opusscript</em></li>
+                <li><em>npm install node-opus</em></li>
+            </ul>
+            <li>una buena conexión de red</li>
+        </ul>
+        <br><br>
+        <h2>Unirse a un canal de voz</h2>
+        <p>En este ejemplo se unira a un canal de voz del remitente, esto es importante ya que nos permite obtener una <em>VoiceConnection</em> donde podemos empezar a transmitir audio.</p>
+        <pre class="c-pre"><code class="c-code"><span class="c-morado">if</span> (command === 'join') { 
+    <span class="c-morado">let</span> Canalvoz = message.member.voiceChannel;
+    <span class="c-morado">if</span> (!Canalvoz <span class="c-azul">||</span> Canalvoz.type <span class="c-azul">!==</span> <span class="c-verde">'voice'</span>) {
+    message.channel.<span class="c-azul">send</span>(<span class="c-verde">'¡Necesitas unirte a un canal de voz primero!.'</span>).<span class="c-azul">catch</span>(error <span class="c-morado">=></span> message.channel.<span class="c-azul">send</span>(error));
+    } <span class="c-morado">else if</span> (message.guild.voiceConnection) {
+    message.channel.<span class="c-azul">send</span>(<span class="c-verde">'Ya estoy conectado en un canal de voz.'</span>);
+    } <span class="c-morado">else</span> {
+     message.channel.<span class="c-azul">send</span>(<span class="c-verde">'Conectando...'</span>).<span class="c-azul">then</span>(m <span class="c-morado">=></span> {
+          Canalvoz.<span class="c-azul">join</span>().<span class="c-azul">then</span>(() <span class="c-morado">=></span> {
+               m.<span class="c-azul">edit</span>(<span class="c-verde">':white_check_mark: | Conectado exitosamente.'</span>).<span class="c-azul">catch</span>(error <span class="c-morado">=></span> message.channel.<span class="c-azul">send</span>(error));
+         }).<span class="c-azul">catch</span>(error <span class="c-morado">=></span> message.channel.<span class="c-azul">send</span>(error));
+     }).<span class="c-azul">catch</span>(error <span class="c-morado">=></span> message.channel.<span class="c-azul">send</span>(error));
+    }
+}</code></pre><br>
+        <h3>La función leave()</h3>
+        <p><em>Leave</em> se usa para desconectar la app de un canal de voz donde esta conectado.</p>
+        <pre class="c-pre"><code class="c-code"><span class="c-morado">if</span> (command === 'leave') { 
+    <span class="c-morado">let</span> Canalvoz = message.member.voiceChannel;
+    <span class="c-morado">if</span> (!Canalvoz) {
+        message.channel.<span class="c-azul">send</span>(<span class="c-verde">'No estoy en un canal de voz.'</span>);
+    } <span class="c-morado">else</span> {
+        message.channel.<span class="c-azul">send</span>(<span class="c-verde">'Dejando el canal de voz.'</span>).<span class="c-azul">then</span>(() <span class="c-morado">=></span> {
+        Canalvoz.<span class="c-azul">leave</span>();
+        }).<span class="c-azul">catch</span>(error <span class="c-morado">=></span> message.channel.<span class="c-azul">send</span>(error));
+    }   
+}</code></pre>
+        <br><br>
+        <h2>Transmisión en un canal de voz</h2>
+        <p>En el ejemplo anterior, observamos cómo unir a un canal de voz para obtener una <em>VoiceConnection</em>, ahora que hemos obtenido una conexión de voz, podemos iniciar la transmisión de audio en ella.</p>
+        <br>
+        <p> El siguiente ejemplo muestra cómo reproducir un archivo mp3 desde su PC, usando la función <em>playFile</em>.</p>
+        
+        <pre class="c-pre"><code class="c-code"><span class="c-morado">if</span> (commmand === 'play') {
+    <span class="c-morado">if</span> (!message.guild.voiceConnection) <span class="c-morado">return</span> message.channel.<span class="c-azul">send</span>(<span class="c-verde">'¡No estoy en un canal de voz!, use `-join` para unirme a un canal.'</span>).<span class="c-azul">catch</span>(error => message.channel.<span class="c-azul">send</span>(error));
+    <span class="c-morado">const</span> dispatcher = message.guild.voiceConnection.<span class="c-azul">playFile</span>(<span class="c-verde">`C:/Users/Desktop/musica/audio.mp3`</span>);
+}</code></pre><br>
+        <p>Su archivo no tiene que ser sólo del formato .mp3, ffmpeg puede convertir videos y audios de muchos formatos.</p>
+        <br><br>
+        <h3>La variable Dispatcher</h3>
+        <p>Es una instancia de <em>StreamDispatcher</em>, que gestiona la transmisión de un recurso específico a un canal de voz.   Podemos hacer muchas cosas con el <em>dispatcher</em>, como averiguar cuándo termina la reproducción, pausar, o cambiar el   volumen:</p>
+        <pre class="c-pre"><code class="c-code">dispatcher.<span class="c-azul">on</span>(<span class="c-verde">'end'</span>, () => {
+  // Se activa cuando la transmisión/canción ha terminado.
+});
+
+dispatcher.<span class="c-azul">on</span>(<span class="c-verde">'error'</span>, e => {
+  // Se activa cuando detecta cualquier error que pueda surgir.
+  <span class="c-amarillo">console</span>.log(e);
+});
+
+dispatcher.<span class="c-azul">setVolume</span>(0.5); // Ajuste el volumen a 50%
+dispatcher.<span class="c-azul">setVolume</span>(1); // Ajuste el volumen de nuevo al 100%
+
+dispatcher.<span class="c-azul">time</span>; // El tiempo en milisegundos durante la secuencias que ha estado en transmisión.
+
+dispatcher.<span class="c-azul">pause</span>(); // Detener la secuencia transmisión
+dispatcher.<span class="c-azul">resume</span>(); // Continuar la secuencia transmisión
+
+dispatcher.<span class="c-azul">end()</span>; // Finaliza el dispatcher, emite evento 'end'
+
+</code></pre>
+       
+        <br><br>
+        <h2>Reproduciendo audio utilizando .playStream( )</h2>
+        <p>playStream convierte enlaces (URL's) en audio para poder reproducirlo en un canal de voz.</p>
+        <p>En este ejemplo veremos como reproducir enlaces (URL's) de youtube usando el package ytdl-core.</p>
+        <p>Instalar <em>ytdl-core</em> en la carpeta de su bot.</p>
+        <ul>
+            <li><em>npm install ytdl-core</em></li>
+        </ul>
+        <br>
+        <p>Ejemplo:</p>
+        <pre class="c-pre"><code class="c-code"> <span class="c-morado">if</span> (command === 'ytplay') {
+    <span class="c-morado">const</span> ytdl = <span class="c-azul">require</span>(<span class="c-verde">'ytdl-core'</span>);
+
+    <span class="c-morado">let</span> voiceChannel = message.member.voiceChannel;
+    <span class="c-morado">if</span>(!voiceChannel) <span class="c-morado">return</span> message.channel.<span class="c-azul">send</span>(<span class="c-verde">'¡Necesitas unirte a un canal de voz primero!.'</span>);
+    <span class="c-morado">if</span>(!args) <span class="c-morado">return</span> message.channel.<span class="c-azul">send</span>(<span class="c-verde">'Ingrese un enlace de youtube para poder reproducirlo.'</span>);
+    voiceChannel.<span class="c-azul">join</span>()
+      .<span class="c-azul">then</span>(connection <span class="c-morado">=></span> {
+        <span class="c-morado">const</span> url = <span class="c-azul">ytdl</span>(args, { filter : <span class="c-verde">'audioonly'</span> });
+        <span class="c-morado">const</span> dispatcher = connection.<span class="c-azul">playStream</span>(url);
+        message.channel.<span class="c-azul">send</span>(<span class="c-verde">'Reproduciendo ahora: '</span>+ args);
+        message.<span class="c-azul">delete</span>();
+      })
+      .<span class="c-azul">catch</span>(<span class="c-amarillo">console</span>.<span class="c-azul">error</span>);
+  }</code></pre>
+       <p>Modo de uso:</p>
+       <pre><code>-ytplay [URL youtube]</code></pre>
+        <br><br>
+        <p>Así como puede reproducir URL's de youtube, tambien podemos reproducir estaciones de radios streaming usando <em>.playStream( )</em> y crear bots de radios para su servidor.</p>
+        <p>Para este ejemplo usamos una estación  de radio de musica electro, ustep puede elegir cualquier otro género ingresando a <a href="https://www.radionomy.com/es/style" target="_blank">Radionomy</a> que se encarga de listar estaciones de radio.</p>
+        <pre class="c-pre"><code class="c-code"> <span class="c-morado">if</span> (command === 'radio') {
+    <span class="c-morado">let</span> voiceChannel = message.member.voiceChannel;
+    <span class="c-morado">if</span>(!voiceChannel) <span class="c-morado">return</span> message.channel.<span class="c-azul">send</span>(<span class="c-verde">'¡Necesitas unirte a un canal de voz primero!.'</span>);
+        voiceChannel.<span class="c-azul">join</span>().<span class="c-azul">then</span>(conexion <span class="c-morado">=></span>{
+        conexion.<span class="c-azul">playStream</span>(<span class="c-verde">'http://stream.electroradio.fm:80/192k/;'</span>);
+        message.channel.<span class="c-azul">send</span>(<span class="c-verde">'Radio electro activado.'</span>)
+        <span class="c-morado">return</span>;
+      })
+      .<span class="c-azul">catch</span>(<span class="c-amarillo">console</span>.<span class="c-azul">error</span>);
+  }</code></pre>
+       <br>
+       <p>¡Genial! ya tienes un bot reproduciendo radio streaming, recuerde que debe tener una buena conexión de red para que la transmisión vaya fluida y sin cortes.</p>
+       <br>
+       <h3>Otras funciones de transmisión:</h3>
+       <p>Otra opcion de transmitir un URL de un archivo, puede utilizar <em>.playArbitraryInput()</em>, es menos eficiente que simplemente usar .playStream()</p><br>
+        <pre class="c-pre"><code class="c-code">// Reproducir un mp3 desde una URL
+conexion.<span class="c-azul">playArbitraryInput</span>(<span class="c-verde">'http://miweb.com/sonido.mp3'</span>);
+        </code></pre>
+        <p>Para mas funciones y clases de transmisión, usted puede consultar la documentación de <a href="https://discord.js.org/#/docs/main/stable/class/VoiceConnection" target="_blank">Discord.js VoiceConnection</a>.</p>
+        <br>
+        <h3>Recomendación</h3>
+        <p>Si ustep esta pensando en tener un bot de radio público, nuestro amigo <em>perronosaurio(Waxtz)#1767</em> ha creado un Bot de radio de código abierto en github: <a href="https://github.com/perronosaurio/Baba-Radio" target="_blank">Baba Radio</a>, simple de descargar y con muchas caracteristicas.</p>
+        <p><img src="../images/radio-bot-baba.PNG" alt=""></p>
+        <br><br>
+        <p>Si tiene alguna pregunta y/o duda después de leer esta guía, ingrese al servidor guía en Discord: <a href="https://discord.gg/VxwER6t" target="_blank">MyBOT - Server guía</a>.</p>
+        
+        <small>Sitio web <a href="https://github.com/CraterMaik" target="_blank">github/Crater</a></small></p>
+      </section>
+      
+    </div>
+    <script src="../javascripts/scale.fix.js"></script>
+  </body>
+</html>

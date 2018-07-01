@@ -1,0 +1,212 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>MyBOT - Guía</title>
+
+    <link rel="stylesheet" href="../stylesheets/styles.css">
+    <link rel="stylesheet" href="../stylesheets/pygment_trac.css">
+    <meta name="viewport" content="width=device-width">
+    <link rel="icon" type="image/png" href="../images/myboticon.png">
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>MyBot Guía</h1>
+        
+        <p class="view"><a href="inicio-bienvenida.html">Inicio/Bienvenida</a></p>
+        <p class="view"><a href="uso-editor-de-codigo.html">Instalación y uso de un editor de código</a></p>
+        <p class="view"><a href="cuenta-app-bot.html">Creación de su cuenta App y de Bot</a></p>
+        <p class="view"><a href="instalacion-discordjs-nodejs.html">Instalación de Discord.js y Node.js</a></p>
+        <p class="view"><a href="en-marcha-primer-bot.html">En marcha su primer Bot</a></p>
+        <p class="view"><a href="usando-un-prefix.html">Usando un prefix</a></p>
+        <p class="view"><a href="usando-mesajes-embeds.html">Usando mensajes Embeds</a></p>
+        <p class="view"><a href="usando-argumentos.html">Usando Argumentos</a></p>
+        <p class="view"><a href="ejemplos-comandos.html">Ejemplos</a></p>
+        <p class="view"><a href="usando-eventos.html">Usando Eventos</a></p>
+        <p class="view"><a href="usando-colecciones.html">Usando Colecciones</a></p>
+        <p class="view"><a href="uso-de-roles.html">Usando Roles ◄</a></p>
+        <p class="view"><a href="introducion-bot-de-musica-audio.html">Introducción a un Bot de musica/audio</a></p>
+        <br>
+        <ul>
+          
+          <li><a href="https://twitter.com/intent/follow?screen_name=cratermaik" target="_blank">Twitter<strong>Seguir</strong></a></li>
+          <li><a href="https://www.patreon.com/bePatron?c=926669" target="_blank">Patreon<strong>Donar</strong></a></li>
+          <li><a href="http://www.discordlatam.com/documentacion-mybot">Documentación<strong>Inicio</strong></a></li>
+
+        </ul>
+      </header>
+      <section>
+        <h1>Comprensión de roles</h1>
+       
+        <p>Los roles son una característica poderosa en Discord, este capitulo tiene como objetivo explicar cómo funcionan los roles y los permisos. También exploraremos cómo utilizar roles para proteger sus comandos.</p>
+        <br>
+        <h2>Jerarquía de roles</h2>
+        <p>Antes de comenzar es necesario saber sobres las jerarquías de los roles en Discord: <a href="https://support.discordapp.com/hc/en-us/articles/214836687-Role-Management-101" target="_blank">gestion de roles</a>. Lee esto y vuelve aquí.</p>
+        <br><br>
+        <h2>Obtener rol por nombre o ID</h2>
+        <p>Esta parte es como obtener cualquier otro elemento de una colección tal como vimos anteriormente en <a href="usando-colecciones.html">Uso de Colecciones</a>. Aqui unos ejemplos:</p>
+        <br>
+        <ul>
+            <li>Obtener rol por ID</li>
+        </ul>
+        <pre class="c-pre"><code class="c-code">
+<span class="c-morado">let</span> mirol =  message.guild.roles.<span class="c-azul">get</span>(<span class="c-verde">"123456789987456321"</span>);
+        </code></pre>
+         <br>
+        <ul>
+            <li>Obtener rol por nombre</li>
+        </ul>
+        <pre class="c-pre"><code class="c-code">
+<span class="c-morado">let</span> mirol =  message.guild.roles.<span class="c-azul">find</span>(<span class="c-verde">"name"</span>, <span class="c-verde">"Administrador"</span>);
+        </code></pre>
+        <br><br><br>
+        <h2>Comprobando mis roles</h2>
+        <p>Usando el controlador <em>message</em> podemos comprobar al autor del mensaje y odtener sus roles, veamos el ejemplo:</p>
+        <pre class="c-pre"><code class="c-code"><span class="c-morado">if</span>(command === 'rol'){
+
+    <span class="c-morado">if</span>(!args) <span class="c-morado">return</span> message.channel.<span class="c-azul">send</span>(<span class="c-verde">'Ingrese nombre del rol.'</span>);
+    <span class="c-morado">let</span> mirol = message.guild.roles.<span class="c-azul">find</span>(<span class="c-verde">"name"</span>, args.join(" "));
+    <span class="c-morado">if</span>(!mirol) <span class="c-morado">return</span> message.channel.<span class="c-azul">send</span>(<span class="c-verde">'Rol no encontrado en el servidor.'</span>);
+
+    <span class="c-morado">if</span>(message.member.roles.<span class="c-azul">has</span>(mirol.id)) {
+      message.channel.<span class="c-azul">send</span>(<span class="c-verde">'Si tienes el rol: `'</span>+mirol.name+<span class="c-verde">'`.'</span>);
+    } else {
+      message.channel.<span class="c-azul">send</span>(<span class="c-verde">'No tienes el rol: `'</span>+mirol.name+<span class="c-verde">'`.'</span>);
+    }
+
+  }</code></pre>
+        
+        <br><br>
+        <h2>Obtener todos los miembros que tienen un rol</h2>
+        <pre class="c-pre"><code class="c-code"><span class="c-morado">if</span>(command === 'miembrosrol'){
+        
+    <span class="c-morado">if</span>(!args) <span class="c-morado">return</span> message.channel.<span class="c-azul">send</span>(<span class="c-verde">'Ingrese nombre del rol.'</span>);
+    <span class="c-morado">let</span> rol = message.guild.roles.<span class="c-azul">find</span>(<span class="c-verde">"name"</span>, args.join(" "));
+    <span class="c-morado">if</span>(!rol) <span class="c-morado">return</span> message.channel.<span class="c-azul">send</span>(<span class="c-verde">'Rol no encontrado en el servidor.'</span>);
+    <span class="c-morado">let</span> miembroroles = message.guild.roles.<span class="c-azul">get</span>(rol.id).members;
+    message.channel.<span class="c-azul">send</span>(<span class="c-verde">`Tienes a **</span>${miembroroles.size}<span class="c-verde">** miembro(s) con el rol **</span>${args}<span class="c-verde">**.`</span>);
+    
+  }</code></pre>
+        
+        
+        
+        
+        <br><br>
+        <h2>Agregando un rol a un miembro</h2>
+        <p>Ahora que tienes los roles, probablemente desea agregar un rol a un miembro. Discord.js proporciona 2 metodos practicos para agregar y remover un rol.</p>
+        <ul>
+            <li>Agregar un rol a un miembro: <em>member.addRole(role);</em></li>
+            <li>Remover un rol a un mimebro: <em>member.removeRole(role);</em></li>
+        </ul>
+        <br>
+        <p>Para agregar y eliminar un rol a un miembro usamos la clase <em>message.mentions</em> y protegeremos el comando usando los permisos de jerarquia.</p><br>
+        <p>Ejemplo, agregar rol:</p>
+        
+        <pre class="c-pre"><code class="c-code"><span class="c-morado">if</span>(command === 'addrol'){
+
+    <span class="c-morado">let</span> miembro = message.mentions.members.<span class="c-azul">first</span>();
+    <span class="c-morado">let</span> nombrerol = args.<span class="c-azul">slice</span>(1).<span class="c-azul">join</span>(' ');
+
+    <span class="c-morado">let</span> role = message.guild.roles.<span class="c-azul">find</span>(<span class="c-verde">"name"</span>, nombrerol);
+    <span class="c-morado">let</span> perms = message.member.<span class="c-azul">hasPermission</span>(<span class="c-verde">"MANAGE_ROLES_OR_PERMISSIONS"</span>);
+
+    <span class="c-morado">if</span>(!perms) <span class="c-morado">return</span> message.channel.<span class="c-azul">send</span>(<span class="c-verde">"`Error` `|` No tienes Permisos para usar este comando."</span>);
+     
+    <span class="c-morado">if</span>(message.mentions.users.size < <span class="c-amarillo">1</span>) <span class="c-morado">return</span> message.<span class="c-azul">reply</span>(<span class="c-verde">'Debe mencionar a un miembro.'</span>).<span class="c-azul">catch</span>(<span class="c-amarillo">console</span>.<span class="c-azul">error</span>);
+    <span class="c-morado">if</span>(!nombrerol) <span class="c-morado">return</span> message.channel.<span class="c-azul">send</span>(<span class="c-verde">'Escriba el nombre del rol a agregar, `-addrol @username [rol]`'</span>);
+    <span class="c-morado">if</span>(!role) <span class="c-morado">return</span> message.channel.<span class="c-azul">send</span>(<span class="c-verde">'Rol no encontrado en el servidor.'</span>);
+    
+    miembro.<span class="c-azul">addRole</span>(role).<span class="c-azul">catch</span>(<span class="c-amarillo">console</span>.<span class="c-azul">error</span>);
+    message.channel.<span class="c-azul">send</span>(<span class="c-verde">`El rol **</span>${role.name}<span class="c-verde">** fue agregado correctamente a **</span>${miembro.user.username}<span class="c-verde">**.`</span>);
+
+  }</code></pre>
+        <br>
+        <p>Modo de uso:</p>
+        <pre><code>-addrol @miembro [rol]</code></pre>
+        <br><br>
+       <p>Ejemplo, remover rol:</p>
+        
+        <pre class="c-pre"><code class="c-code"><span class="c-morado">if</span>(command === 'removerol'){
+
+    <span class="c-morado">let</span> miembro = message.mentions.members.<span class="c-azul">first</span>();
+    <span class="c-morado">let</span> nombrerol = args.<span class="c-azul">slice</span>(1).<span class="c-azul">join</span>(' ');
+
+    <span class="c-morado">let</span> role = message.guild.roles.<span class="c-azul">find</span>(<span class="c-verde">"name"</span>, nombrerol);
+    <span class="c-morado">let</span> perms = message.member.<span class="c-azul">hasPermission</span>(<span class="c-verde">"MANAGE_ROLES_OR_PERMISSIONS"</span>);
+
+    <span class="c-morado">if</span>(!perms) <span class="c-morado">return</span> message.channel.<span class="c-azul">send</span>(<span class="c-verde">"`Error` `|` No tienes Permisos para usar este comando."</span>);
+     
+    <span class="c-morado">if</span>(message.mentions.users.size < <span class="c-amarillo">1</span>) <span class="c-morado">return</span> message.<span class="c-azul">reply</span>(<span class="c-verde">'Debe mencionar a un miembro.'</span>).<span class="c-azul">catch</span>(<span class="c-amarillo">console</span>.<span class="c-azul">error</span>);
+    <span class="c-morado">if</span>(!nombrerol) <span class="c-morado">return</span> message.channel.<span class="c-azul">send</span>(<span class="c-verde">'Escriba el nombre del rol a remover, `-removerol @miembro [rol]`'</span>);
+    <span class="c-morado">if</span>(!role) <span class="c-morado">return</span> message.channel.<span class="c-azul">send</span>(<span class="c-verde">'Rol no encontrado en el servidor.'</span>);
+    
+    miembro.<span class="c-azul">removeRole</span>(role).<span class="c-azul">catch</span>(<span class="c-amarillo">console</span>.<span class="c-azul">error</span>);
+    message.channel.<span class="c-azul">send</span>(<span class="c-verde">`El rol **</span>${role.name}<span class="c-verde">** del miembro **</span>${miembro.user.username}<span class="c-verde">** fue removido  correctamente.`</span>);
+
+  }</code></pre>
+        
+        <p>Modo de uso:</p>
+        <pre><code>-removerol @miembro [rol]</code></pre>
+        <br><br>
+        <h2>Permisos</h2>
+        <p>Los permisos son las caracteristicas de los roles, dando jerarquías a cada rol creado dentro de un servidor.</p>
+        
+        <p>En los ejemplos anterios como el kick, utilizamos el permiso <em>"KICK_MEMBERS"</em> para darle una validacion o seguridad al comando, esto quiere decir que solo los miembros que tengan el permiso <em>"KICK_MEMBERS"</em> podran utilizar el kick. De igual manera para el ban, addrol y removerol.</p>
+        
+        <br>
+        <h3>¿Como obtener y utilizar los permisos?</h3>
+        <p>La forma de usar:</p>
+        
+        <pre class="c-pre"><code  class="c-code">
+<span class="c-morado">let</span> permiso = message.member.<span class="c-azul">hasPermission</span>(<span class="c-verde">"ADMINISTRATOR"</span>);
+
+</code></pre>
+       <p>La variable <em>permiso</em> guarda y valida al autor del mensaje si tiene el permiso administrador dentro del servidor.</p>
+        
+        <br><br>
+        <h3>Lista de permisos</h3>
+        <p>Esta es la lista de los nombres de los permisos que puedes usar para validar tus comandos usando <em>.hasPermission("nombredelpermiso")</em>:</p>
+        <pre class="c-pre"><code class="c-code">
+  CREATE_INSTANT_INVITE,
+  KICK_MEMBERS,
+  BAN_MEMBERS,
+  ADMINISTRATOR,
+  MANAGE_CHANNELS,
+  MANAGE_GUILD,
+  ADD_REACTIONS,
+  READ_MESSAGES,
+  SEND_MESSAGES,
+  SEND_TTS_MESSAGES,
+  MANAGE_MESSAGES,
+  EMBED_LINKS,
+  ATTACH_FILES,
+  READ_MESSAGE_HISTORY,
+  MENTION_EVERYONE,
+  EXTERNAL_EMOJIS,
+  CONNECT,
+  SPEAK,
+  MUTE_MEMBERS,
+  DEAFEN_MEMBERS,
+  MOVE_MEMBERS,
+  USE_VAD,
+  CHANGE_NICKNAME,
+  MANAGE_NICKNAMES,
+  MANAGE_ROLES_OR_PERMISSIONS,
+  MANAGE_WEBHOOKS,
+  MANAGE_EMOJIS
+        </code></pre>
+        <br>
+        <p><a href="introducion-bot-de-musica-audio.html">Siguiente</a>.</p>
+        <br><br>
+        <p>Si tiene alguna pregunta y/o duda después de leer esta guía, ingrese al servidor oficial de Discord: <a href="https://discord.gg/VxwER6t" target="_blank">MyBOT - Server guía</a>.</p>
+        
+        
+        <small>Sitio web <a href="https://github.com/CraterMaik" target="_blank">github/Crater</a></small></p>
+      </section>
+      
+    </div>
+    <script src="../javascripts/scale.fix.js"></script>
+  </body>
+</html>

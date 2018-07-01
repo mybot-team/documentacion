@@ -1,0 +1,203 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>MyBOT - Guía</title>
+
+    <link rel="stylesheet" href="../stylesheets/styles.css">
+    <link rel="stylesheet" href="../stylesheets/pygment_trac.css">
+    <meta name="viewport" content="width=device-width">
+    <link rel="icon" type="image/png" href="../images/myboticon.png">
+  
+  </head>
+  <body>
+    <div class="wrapper">
+     <header>
+        <h1>MyBot Guía</h1>
+        
+        <p class="view"><a href="inicio-bienvenida.html">Inicio/Bienvenida</a></p>
+        <p class="view"><a href="uso-editor-de-codigo.html">Instalación y uso de un editor de código</a></p>
+        <p class="view"><a href="cuenta-app-bot.html">Creación de su cuenta App y de Bot</a></p>
+        <p class="view"><a href="instalacion-discordjs-nodejs.html">Instalación de Discord.js y Node.js</a></p>
+        <p class="view"><a href="en-marcha-primer-bot.html">En marcha su primer Bot</a></p>
+        <p class="view"><a href="usando-un-prefix.html">Usando un prefix ◄</a></p>
+        <p class="view"><a href="usando-mesajes-embeds.html">Usando mensajes Embeds</a></p>
+        <p class="view"><a href="usando-argumentos.html">Usando Argumentos</a></p>
+        <p class="view"><a href="ejemplos-comandos.html">Ejemplos</a></p>
+        <p class="view"><a href="usando-eventos.html">Usando Eventos</a></p>
+        <p class="view"><a href="usando-colecciones.html">Usando Colecciones</a></p>
+        <p class="view"><a href="uso-de-roles.html">Usando Roles</a></p>
+        <p class="view"><a href="introducion-bot-de-musica-audio.html">Introducción a un Bot de musica/audio</a></p>
+        <br>
+        <ul>
+        
+          <li><a href="https://twitter.com/intent/follow?screen_name=cratermaik" target="_blank">Twitter<strong>Seguir</strong></a></li>
+          <li><a href="https://www.patreon.com/bePatron?c=926669" target="_blank">Patreon<strong>Donar</strong></a></li>
+          <li><a href="http://www.discordlatam.com/documentacion-mybot">Documentación<strong>Inicio</strong></a></li>
+
+        </ul>
+      </header>
+      <section>
+        <h1>Uso de un prefix</h1>
+        
+        <p>Usted puede ser que haya notado que muchos de los bots responden a los comandos con un prefix específico. Ya sea un signo de exclamación (!), Un punto (.), Un signo de interrogación (?) u otro carácter. Esto es útil para dos cosas.</p>
+        <br>
+        <p>En primer lugar, si no utiliza un prefix único y tiene más de un bot en un servidor, ambos responderán a los mismos comandos.</p>
+        <p>En segundo lugar, en el ejemplo anterior el bot responden cuando el mensaje comienza con ping que son 4 caracteres, esto significa que la siguiente frase provocará la respuesta del bot.</p>
+        
+        <p>Para evitar esto vamos a crear un prefix, así como la capacidad de cambiar el prefix cuando guste desde un solo lugar.</p>
+        <br>
+        <p>Bien, hay dos formas de poder crear y usar una variable como prefix:</p>
+        <p>1. Creando una variable dentro del mismo archivo mybot.js como prefix.</p>
+        <p>2. Dividir en partes la configuración de variables, creando un archivo .JSON.</p>
+        <br>
+        <p>Vamos por la forma mas recomendada, crear un archivo .JSON para la configuración.</p> <br>  
+        
+        <h2>Agregar un archivo .JSON a su bot</h2>
+        <ul>
+            <li>Crear un nuevo archivo dentro de la carpeta del bot.</li>
+            <li>Darle el nombre de config.json (.json es la extencion del archivo).</li>
+        </ul>
+        <p><img src="../images/configjsongif.gif" alt=""></p>
+        <br>
+        <p>Ahora que ya hemos creado el archivo de configuracion hay 3 cosas que podemos agregar al archivo, son:</p>
+        <ul>
+            <li>El token del bot</li>
+            <li>El prefix</li>
+            <li>ID del Owner</li>
+        </ul>
+        <p>Entre otras cosas mas.</p><br>
+        <p>Copiar y pegar el siguiente ejemplo en el archivo de configuración .JSON.</p>
+       
+        <pre  class="c-pre"><code class="c-code">{
+"token":<span class="c-verde">"tokensecreto"</span>,
+"prefix":<span class="c-verde">"-"</span>,
+"IdOwner":<span class="c-verde">"tuIdDiscord"</span>           
+}</code>
+        </pre><br>
+        
+        <p>Despues de copiar el codigo de config usted puede cambiar el prefix a cual mejor le paresca para el ejemplo usare el simbolo "-" como prefix, tambien copie el token de su bot correspondiente y su ID de usuario de Discord si no sabe cual es dejelo tan como esta y continue, mas adelate veremos esa parte.</p>
+        <p>Guardar el cambio usando <em>(CONTROL + S)</em>.</p><br><br>
+        <h2>Referenciando el archivo .JSON</h2>
+        <p>En la parte superior de su archivo del bot mybot.js, agregamos una línea para llamar al archivo config.json mediante una variable.</p>
+        <pre class="c-pre"><code class="c-code"><span class="c-morado">const</span> Discord = <span class="c-azul">require</span>(<span class="c-verde">"discord.js"</span>);
+<span class="c-morado">const</span>  client = <span class="c-morado">new</span> <span class="c-amarillo">Discord.Client();</span>
+<span>//AGREGRE LA SIGUIENTE LINEA DE CONFIG AL ARCHIVO DEL BOT</span>
+<span class="c-morado">const</span> config = <span class="c-azul">require</span>(<span class="c-verde">"./config.json"</span>);
+        </code></pre><br>
+        <table>
+          <tbody>
+        <tr>
+        <th>Nombre</th>
+        <th>Descripción</th>
+          </tr>
+          <tr>  
+        <td>config</td>
+        <td>Es la variable que representa la configuración instanciada de config.json</td>
+          </tr>
+          
+        </tbody>
+        </table><br>
+        <p>Significa que ahora usted utilizara <em>config</em> como objeto de configuración para llamar los datos del archivo.</p>
+        <ul>
+            <li>Para llamar al prefix usamos: config.prefix</li>
+            <li>Para llamar al token usamos: config.token</li>
+            <li>Para llamar el IDowner usamos: config.IdOwner, etc.</li>
+        </ul><br><br>
+        
+        <h2>Usando config en su código</h2>
+        <p>Vamos a usar la variable config que representa el archivo de configuración, primero cambiamos el token llamando directamente a la variable.</p><br>
+        <p>La linea de nuestro bot se ve así:</p>
+        <pre class="c-pre">
+        <code class="c-code">
+client.<span class="c-azul">login</span>(<span class="c-verde">"TokenSecreto-SFASfasFWf#f3KKsds51.sDSd"</span>);</code>
+        </pre><br>
+        <p>Y simplemente tenemos que cambiarlo a esto:</p>
+        <pre class="c-pre">
+        <code class="c-code">
+client.<span class="c-azul">login</span>(config.token);</code>
+        </pre><br>
+        <p>Listo, la otra linea que tenemos que agregar es el prefix, vamos a la linea de nuestro codigo  y agregamos el prefix creando una nueva variable para los comandos. Despues de agregar el prefix a los comandos esto se deberia de ver así:</p>
+        <pre class="c-pre"><code class="c-code"><span class="c-morado">const</span> Discord = <span class="c-azul">require</span>(<span class="c-verde">"discord.js"</span>);
+<span class="c-morado">const</span>  client = <span class="c-morado">new</span> <span class="c-amarillo">Discord.Client();</span>
+<span class="c-morado">const</span> config = <span class="c-azul">require</span>(<span class="c-verde">"./config.json"</span>);
+
+client.<span class="c-azul">on</span>(<span class="c-verde">"ready"</span>, () <span class="c-morado">=></span> {
+   <span class="c-amarillo">console.<span class="c-azul">log</span></span>(<span class="c-verde">"Estoy listo!"</span>);
+});
+<span class="c-morado">var</span> prefix = config.prefix;
+
+client.<span class="c-azul">on</span>(<span class="c-verde">"message"</span>, (message) <span class="c-morado">=></span> {
+  <span class="c-morado">if</span> (message.content.<span class="c-azul">startsWith</span>(prefix +<span class="c-verde"> "ping"</span>)) {
+    message.channel.<span class="c-azul">send</span>(<span class="c-verde">"pong!"</span>);
+  } else
+  <span class="c-morado">if</span> (message.content.<span class="c-azul">startsWith</span>(prefix + <span class="c-verde">"hola"</span>)) {
+    message.channel.<span class="c-azul">send</span>(<span class="c-verde">"Hola que tal?"</span>);
+  }
+});
+client.<span class="c-azul">login</span>(config.token);</code>     
+        </code></pre><br>
+        <p>Luego del cambiar y agregar, guardar todo usando <em>(CONTROL + S)</em>.</p>
+        <blockquote><br>
+        <p>NOTA: He agregado un nuevo comando "hola" y el bot simplemente respondera con un: Hola que tal?, pero esta vez debe utilizar el prefix creado.</p>
+        </blockquote>
+        <br><br>
+        <p>Vamos a activar el bot nuevamente y comprobar los cambios con el prefix.</p>
+        <p><img src="../images/usandoprefixgif.gif" alt=""></p>
+        <br>
+        <p>Genial!, el bot responde las consultas atravez del  prefix creado.</p>
+        <blockquote><br>
+        <p>NOTA: Ahora el bot solo responde iniciando el prefix creado, "-" es el prefix creado para el ejemplo.</p>
+        </blockquote>
+        <br><br>
+        <h2>Prevención del bucle infinito</h2>
+        <p>Hay una última cosa de la que quiero hablar: ¿los bots se contestan? ¡si! y esto se debe a que si usted tiene 2 bots con el mismo prefix en su servidor y cada uno debe responder a la orden del mismo prefix, "-help". Ahora si una persona escribe -help en un canal y ambos bots responden, y un bot verá la respuesta como una consulta y se contestarán a cada momento. A eso se le denomina como un bucle infinito: "repetir la misma consulta sin detenerse." </p><br>
+        <p>Para evitar que esto ocurra, debemos agregar dos condiciónes dentro de nuestro codigo, en el inicio del evento <em>(message)</em> :</p>
+        <pre class="c-pre">
+        <code class="c-code">
+ <span class="c-morado">if</span> (<span class="c-azul">!</span>message.content.<span class="c-azul">startsWith</span>(prefix)) <span class="c-morado">return</span>;
+ <span class="c-morado">if</span> (message.author.bot) <span class="c-morado">return</span>;</code>
+        </pre>
+        
+        <blockquote><br>
+        <p>NOTA: Significa que si no hay un prefix o el autor de la consula es un bot, deje de procesar.</p>
+        </blockquote>
+        <br><br>
+        <p>El código final del bot debe de verse así:</p>
+         <pre class="c-pre"><code class="c-code"><span class="c-morado">const</span> Discord = <span class="c-azul">require</span>(<span class="c-verde">"discord.js"</span>);
+<span class="c-morado">const</span>  client = <span class="c-morado">new</span> <span class="c-amarillo">Discord.Client();</span>
+<span class="c-morado">const</span> config = <span class="c-azul">require</span>(<span class="c-verde">"./config.json"</span>);
+
+client.<span class="c-azul">on</span>(<span class="c-verde">"ready"</span>, () <span class="c-morado">=></span> {
+   <span class="c-amarillo">console.<span class="c-azul">log</span></span>(<span class="c-verde">"Estoy listo!"</span>);
+});
+<span class="c-morado">var</span> prefix = config.prefix;
+
+client.<span class="c-azul">on</span>(<span class="c-verde">"message"</span>, (message) <span class="c-morado">=></span> {
+  <span class="c-morado">if</span> (<span class="c-azul">!</span>message.content.<span class="c-azul">startsWith</span>(config.prefix)) <span class="c-morado">return</span>;
+  <span class="c-morado">if</span> (message.author.bot) <span class="c-morado">return</span>;
+  
+  <span class="c-morado">if</span> (message.content.<span class="c-azul">startsWith</span>(prefix +<span class="c-verde"> "ping"</span>)) {
+    message.channel.<span class="c-azul">send</span>(<span class="c-verde">"pong!"</span>);
+  } else
+  <span class="c-morado">if</span> (message.content.<span class="c-azul">startsWith</span>(prefix +<span class="c-verde">"hola"</span>)) {
+    message.channel.<span class="c-azul">send</span>(<span class="c-verde">"Hola que tal?"</span>);
+  }
+});
+client.<span class="c-azul">login</span>(config.token);</code>     
+        </code></pre>
+        <br>
+        Entonces, tenemos un bot que sólo responde a 2 comandos ¿Es esto un bot básico completo? ¡Por supuesto!. Vayamos al <a href="usando-mesajes-embeds.html">Siguiente</a> capítulo. 
+        
+        <br><br><br>
+        <p>Si tiene alguna pregunta y/o duda después de leer esta guía, ingrese al servidor guía en Discord: <a href="https://discord.gg/VxwER6t" target="_blank">MyBOT - Server guía</a>.</p>
+        
+        
+       <small>Sitio web <a href="https://github.com/CraterMaik" target="_blank">github/Crater</a></small></p>
+      </section>
+      
+    </div>
+    <script src="../javascripts/scale.fix.js"></script>
+  </body>
+</html>
