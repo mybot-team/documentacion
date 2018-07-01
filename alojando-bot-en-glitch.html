@@ -1,0 +1,243 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Alojando un bot en Glitch.com - MyBot Guía</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    
+    <meta name="viewport" content="width=device-width">
+    
+    <link rel="icon" type="image/png" href="images/myboticon.png">
+    
+    <meta property="og:title" content="Documentación MyBOT - Alojando en Glitch">
+    
+        
+  </head>
+  <body>
+    <div class="wrapper">
+     <header>
+      <h1>MyBot Guía</h1>
+        
+        <ul>
+          <li><a href="https://twitter.com/intent/follow?screen_name=cratermaik" target="_blank">Twitter<strong>Seguir</strong></a></li>
+          <li><a href="https://www.patreon.com/bePatron?c=926669" target="_blank">Patreon<strong>Donar</strong></a></li>
+          <li><a href="http://www.discordlatam.com/documentacion-mybot">Documentación<strong>Inicio</strong></a></li>
+        </ul>
+      </header>
+      
+      <section>
+        
+        <h1>Alojando un bot en Glitch.com</h1>
+        
+        <p>Luego de muchas busqueda y consultas. Finalmente he encontrado un alojamiento gratuito que ustedes pueden crear para alojar sus bots, que no es muy complicado de configurar y muy funcional, y soporta las versiones mas recientes de node, usted puede alojar un bot simple totalmente gratis y esperar hasta que consiga obtener un alojamiento de paga.</p>
+        
+        <p>Bien, se que estas muy emocionado por empezar a crear, configurar y ejecutar su bot. Algo a tener en cuenta antes de empezar es que, esta plataforma es nueva y esta en fase beta y es posible que se produzcan errores al momento de configurar sus archivos, pero no es común. <em>En todo caso ingrese al servidor <a href="https://discord.gg/VxwER6t" target="_blank">MyBOT</a> para cualquier consulta.</em> ¡Empezemos!</p>
+        
+        <br><br>
+        <h2>Cómo ejecutar mi bot</h2>
+        <p>¿Alguna vez an intentado seriamente en conseguir un alogamiento para su bot en heroku?, como habran visto en algunos casos son configuraciones tras configuraciones, haciendo algo muy complicado de crear y ejecutar. Glitch.com no tiene nada de esto. Ejecutar y configurar su codigo es tan simple:</p>
+        <ul>
+            <li>Abrir Glitch en tu navegador <a href="https://glitch.com/" target="_blank">Glitch.com</a></li>
+            <li>Haga clic en <em>Iniciar un nuevo proyecto</em> y luego en <em>Crear una aplicación de node</em>.</li>
+        </ul>
+        <p><img src="./images/app-glitch.gif" alt=""></p>
+        <p>Así de simple, técnicamente está hecho.</p>
+        <p>Usted puede empezar a codificar de inmediato. El proyecto determinado es un sitio web server.js. No lo elimines todavía, necesitaremos algo de ese código para más adelante, nesecitamos configurar algunas cosas, incluyendo asegurarnos de que el proyecto permanezca en línea y protegiéndolo creando una cuenta.</p>
+        <br><br>
+        <h2>Crea tu cuenta</h2>
+        <p>Para no perder nunca el acceso a su código, lo primero que debe hacer es crear una cuenta en Glicht.</p>
+        <ul>
+            <li>Haga clic en <em>Iniciar sesión</em> en la parte superior derecha de la página.</li>
+            <li>Elija Github o Facebook para iniciar sesión.</li>
+        </ul>
+        <p><img src="./images/crear-cuenta-glitch.png" alt=""></p>
+        <p>Sí, el proyecto ahora es tuyo, así de simple</p>
+        <br><br>
+        <h2>Configurar el proyecto</h2>
+        <p>Así que aquí hay algunas cosas sobre el proyecto que necesitamos configurar, por algunas razones.</p>
+        <p>Primero, proteja el proyecto creando una cuenta, De forma predeterminada cualquier persona con el nombre de su proyecto puede acceder a su código directamente. No pueden editarlo, pero pueden analizar y mirar su código.</p>
+        <p>Para des-compartir a alguien que ha visto su proyecto y hacerlo privado (Todavia no es algo fijo, pero es esta buscando la manera correcta).</p>
+        <ul>
+            <li>Haga clic en el botón <em>Share</em>(Compartir) en la parte superior de la lista de archivos, además de su nombre.</li>
+            <li>Haga clic en <em>Hacer Privado</em>.</li>
+            <li>Aún puede invitar a las personas a ver y colaborar es su proyecto, con el enlace proporcionado.</li>
+        </ul>
+        <p><img src="./images/proyecto-priv.gif" alt=""></p><br>
+        <p>Lo siguiente es, el nombre del proyecto. Ahora, los proyectos funcionan a través de server.js puedes cambiarlo si realmente quieres o no, pero por ahora, sólo tenemos que configurarlo para mantenerlo conectado.</p>
+        
+        <ul>
+            <li>Haga clic en el nombre del proyecto en la parte superior izquierda de la pantalla.</li>
+            <li>En el pop-up haga clic en el nombre en la parte superior y cambiar el nombre.</li>
+            <li>El nombre que elija (debe ser único y no ser tomado por otra persona) será la dirección del subdominio de su "sitio".</li>
+            <li>Mientras estás en ello, darle una descripción si realmente quieres.</li>
+        </ul>
+        <p><img src="./images/nombre-app.gif
+        " alt=""></p>
+        <br>
+        <br>
+        <p>Por último, debemos deshabilitar algunas funciones de autoguardado. Glitch guarda automáticamente el archivo, literalmente, en cada pulsación de teclas que realice. Y lo reinicia.</p>
+        <p>Esto no sólo es ligeramente molesto visualmente, pero también perjudicial para los bots ya que Discord API restablecerá el token de su bot si inicia sesión 1000 veces en un día. Esto significa que si escribe 1000 caracteres en su código, habra bastantes problemas.</p>
+        
+        <ul>
+            <li>Cree un nuevo archivo en el proyecto y llámelo <em>watch.json</em></li>
+            <li>Pegue el siguiente código:</li>
+        </ul><br>
+        <pre><code class="c-verde">
+{
+"install": {
+  "include": [
+    "^package\\.json$",
+    "^\\.env$"
+  ]
+},
+
+"restart": {
+  "exclude": [
+    "^public/",
+    "^dist/"
+  ],
+
+  "include": [
+    "\\.js$",
+    "\\.json"
+  ]
+},
+"throttle": <span class="c-amarillo">900000</span>
+}
+</code></pre>
+      <br>
+      <p>Este número: 900000 significa que cada 15 minutos, si los archivos han cambiado, el bot se reiniciará. Ahora hay una advertencia aquí, significa que cualquier cambio que hagas en el bot no surtirá efecto (no reiniciará) hasta, 15 minutos despues.</p>
+      <p><img src="./images/crear-watchsjon.gif" alt=""></p>
+      <br><br>
+      <h2>Manteniendo el proyecto activo</h2>
+      <p>Muy bien, como, Glitch se creo para ser un alojamiento web realmente, y se "duerme" despues de cada 5 minutos si no recibe ninguna solicitud HTTP. Sin embargo, hay una manera muy conveniente de mantenerlo vivo, que es realmente proporcionado por la propia aplicación. el modulo node está preinstalado, y todo lo que necesita hacer es "hacer ping" cada 5 minutos (ya sea en el archivo principal server.js o cualquier que usted llame en el arranque) para asegurarse que no se "duerma" la app.</p>
+      <p>Primero, borre todo el contenido de su archivo de arranque (server.js) y dejarlo en blanco</p>
+      <p>Luego, pegar estas líneas de código en su archivo de arranque (server.js), este es el truco para arrancar y mantenerlo "vivo" por ahora:</p>
+      <pre><code>
+//ESTE CODIGO NO AFECTARA SU BOT, SCRIPT DE ARRANQUE
+
+<span class="c-morado">const</span> http = <span class="c-amarillo">require</span>('http');
+<span class="c-morado">const</span> express = <span class="c-amarillo">require</span>('express');
+<span class="c-morado">const</span> app = express();
+
+//
+app.use(express.static(<span class="c-verde">'public'</span>));
+
+app.get("/", function (request, response) {
+  response.<span class="c-azul">sendFile</span>(__dirname + <span class="c-verde">'/views/index.html'</span>);
+});
+
+app.get("/", (request, response) => {
+  response.sendStatus(<span class="c-amarillo">200</span>);
+});
+
+app.listen(process.env.PORT);
+
+setInterval(() => {
+  http.get(<span class="c-verde">`http://${process.env.PROJECT_DOMAIN}.glitch.me/`</span>); 
+}, <span class="c-amarillo">280000</span>);
+
+
+//DESDE AQUI EMPIEZA A ESCRIBIR EL CODIGO PARA SU BOT
+
+<span class="c-morado">const</span> Discord = require('discord.js');
+<span class="c-morado">const</span> client = new Discord.Client();
+
+client.<span class="c-morado">on</span>(<span class="c-verde">'ready'</span>, () => {
+  console.log(<span class="c-verde">'estoy listo!'</span>);
+  client.user.setGame(`prueba help`);
+});
+
+client.<span class="c-morado">on</span>(<span class="c-verde">'message'</span>, message => {
+  if (message.content.<span class="c-azul">startsWith</span>(<span class="c-verde">"ping"</span>)) {
+   let ping = Math.floor(message.client.ping);
+   message.channel.<span class="c-azul">send</span>(<span class="c-verde">':ping_pong: `'+ping+' ms.`'</span>); 
+  }
+  
+});
+
+client.login(<span class="c-verde">'TokenSecreto'</span>);
+      </code></pre>
+      <p>¿Qué hace esto? Mantiene vivo la app server.js, que en realidad no afecta el proyecto en sí mismo y se reproduce cada 5 minutos, por lo que nunca se apaga. Increíble.</p>
+      <br><br>
+      <h2>Configuración de package.json</h2>
+      
+      <p>Hay dos cosas que cambiar en el archivo package.json del proyecto para asegurarse de que su proyecto realmente funcionará.</p>
+      <br>
+      <p>En primer lugar, debe proporcionar una versión node.js si su proyecto requiere una versión superior del node (por ejemplo, 8.4.0). Esto se hace con la enginesclave, como tal:</p>
+      <pre><code class="c-verde">"engines": {
+    "node": "8.x"
+    },</code></pre>
+      <br>
+      <p>En segundo lugar, debe proporcionar el start script. Muchos de nosotros en general solo configuramos la main: server.js y esto no es suficiente. Debe proporcionar un script de inicio:</p>
+      
+      <pre><code class="c-verde">"scripts": {
+    "test": "echo \" Error: no se ha especificado ningún test \ "&& exit 1",
+    "start": "node server.js"
+  },</code></pre>
+      <br>
+      <p>Aquí está un package.json completo, éste es la versión modificada en funcionamiento de MyBOT para el testeo de la app:</p>
+      <pre><code class="c-verde">
+{
+  "name": "mybot",
+  "version": "0.0.1",
+  "description": "acerca de? su bot",
+  "main": "node server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.16.2",
+    "discord.js": "^11.3.0",
+    "http": "^0.0.0"
+  },
+  "engines": {
+    "node": "8.x"
+  },
+  "repository": {
+    "url": "https://github.com/CraterMaik"
+  },
+  "license": "MIT",
+  "keywords": [
+    "node",
+    "glitch",
+    "express"
+  ]
+}
+     </code></pre>
+      <br>
+      <h2>config.json es inseguro?</h2>
+      
+      <p>Otro cambio es que su archivo config.json es inseguro si comparte su proyecto en Glitch.com. La forma más fácil de solucionar esto es utilizar variables de entorno. Abra el archivo <em>.env</em> y agregue la línea siguiente:</p>
+      
+      <pre><code>TOKEN=ElTokenSecretoDeSuBot</code></pre>
+      <p><img src="./images/env-token.gif" alt=""></p>
+      <br><br>
+      <p>A continuación, puede acceder a asu token desde cualquier otro lugar utilizando process.env.TOKEN, por lo que de nuevo con el ejemplo MyBOT, en el archivo server.js:</p>
+      <pre><code>client.<span class="c-verde">login</span>(process.env.<span class="c-morado">TOKEN</span>);</code></pre>
+      <p>De la misma manera puede tambien puede hacerlo para su prefix y IdOnwer.</p>
+      <br><br>
+      <h2>Recursos</h2>
+      <p>Aquí hay algunos recursos de Glitch:</p>
+      <ul>
+          <li><a href="https://support.glitch.com/">Soporte Glitch</a> (foro de soporte)</li>
+          <li><a href="https://glitch.com/faq">Preguntas Frecuentes</a> (algunos detalles técnicos)</li>
+      </ul>
+      <br><br>
+      <h2>Obtener ayuda</h2>
+
+        <p>Si tiene alguna pregunta y/o duda después de leer esta guía, ingrese al servidor guía en discord:</p>
+        <p><a href="https://discord.gg/VxwER6t" target="_blank"><img src="images/invitacion.PNG" alt=""></a></p>
+      </section>
+      <footer>
+        
+        <p><small>Sitio web <a href="https://github.com/CraterMaik" target="_blank">github/Crater</a> &mdash; Diseño web <a href="https://github.com/orderedlist" target="_blank">Orderedlist</a></small></p>
+      </footer>
+    </div>
+    <script src="javascripts/scale.fix.js"></script>
+  </body>
+</html>
